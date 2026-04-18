@@ -6,19 +6,15 @@ MIIIMELauncher · 미메런처 · ミメランチャー<br>
 ![License](https://img.shields.io/badge/License-Freeware-lightgrey?style=flat-square)
 
 <br>
-<img width="559" height="136" alt="001" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Enhanced/Id/Neon/4b_136_0_G.png?raw=true" style="margin-top: 20px; margin-bottom: 20px;">
-<br><br>
+<img width="559" height="136" alt="001" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Enhanced/Id/Neon/4b_136_1_G.png?raw=true" style="margin-top: 20px; margin-bottom: 20px;">
+<br>
 
-> MIIIMELauncher is not a one-click portable solution. It is a controlled execution environment.  
-> 미메런처는 원클릭 포터블 솔루션이 아닙니다. 제어된 실행 환경을 제공합니다.
-
-Instead of hiding system behavior, it exposes it.  
-Instead of simplifying portability, it enforces consistency.  
+MIIIMELauncher is not a one-click portable solution. It is a controlled execution environment.  
 Not recommended unless you have a thorough understanding of file systems and registry structures.
-  
-시스템 동작을 숨기는 대신 노출합니다.   
-이식성을 단순화하는 대신 일관성을 강화합니다.  
+
+미메런처는 원클릭 포터블 솔루션이 아닙니다. 제어된 실행 환경을 제공합니다.  
 파일 시스템 및 레지스트리 구조에 대한 이해가 없는 경우 사용을 권장하지 않습니다.  
+<br>
 
 ---
 
@@ -56,22 +52,12 @@ Not recommended unless you have a thorough understanding of file systems and reg
 ### 3. Forensic Recovery
 - **Session Tracking** : Validates session integrity via UUID and PID monitoring.
 - **Rollback** : Transaction-based recovery using `*.reg.bakk` snapshots.
+- **AppData Recovery** : On next launch, detects `*_bakk` folders left by abnormal termination, removes orphaned Junction Points, and restores the original AppData directories automatically. Controlled by `CrashRecovery=` in `[Launch]` (`1`=enabled by default, `0`=disabled).
 
 **[포렌식 복구]**
 - **세션 추적** : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
 - **롤백** : 트랜잭션 기반의 스냅샷(`*.reg.bakk`)을 이용한 정밀 복구.
-
-### 4. Volatility Control (Freeze Mode)
-- **Read-Only** : Forces volatile state; no write-back to storage.  
-- **Auto-Redirection** : Relocates execution context to Host Temp on RO media.  
-  Detection is based on drive type (`DriveGetType`) combined with an actual filesystem write test,  
-  covering CD / ISO / Write-Protected USB and any other non-writable path.
-
-**[휘발성 제어 (동결 모드)]**
-- **읽기 전용** : 휘발성 상태 강제, 스토리지 쓰기 방지.  
-- **자동 우회** : RO 미디어 감지 시 호스트 Temp로 실행 컨텍스트 자동 재배치.  
-  드라이브 타입(`DriveGetType`) 확인 및 실제 파일시스템 쓰기 테스트를 통해 감지.  
-  CD/ISO/쓰기 금지 USB 외 비쓰기 가능 경로도 포함.
+- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 `*_bakk` 폴더를 자동 탐지하여 고아 Junction을 제거하고 원본 AppData를 복원. `[Launch]` 섹션의 `CrashRecovery=`로 제어 (`1`=활성(기본값), `0`=비활성).
   
 ---
 
@@ -138,13 +124,44 @@ Key configuration values for the launcher behavior.
 | `RunAsAdmin` | Launch | Bool | 1=Force Administrator privileges, 0=User mode |
 | `UseJunction` | Options | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode |
 | `FreezeMode` | Options | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode. |
-| `LogLevel` | Options | Int | 0=Off, 1=All, 2=Debug, 3=Info, 4=Warn, 5=Error |
+| `LogLevel` | Options | Int | 0=Off (default), 1=INFO/WARN/ERROR, 2=All including DEBUG, 3=INFO+, 4=WARN+, 5=ERROR only |
 | `ProcessCheckInterval` | Advanced | Int | Polling interval (ms) for child process monitoring |
+
+#### **[Registry] Sections**
+
+| Section | Description |
+| --- | --- |
+| `[Registry]` | Registry keys to back up on launch, inject from `Dat\Reg\KeyNN.reg`, retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). |
+| `[RegistryRoot]` | Parent keys to prune if empty after `[Registry]` cleanup. |
+| `[RegistryFix]` | Key\|Value\|Data entries to force-write on every launch (path patching). Supports `SmartSkip`. |
+| `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip`. |
+
+#### **[Filesystem] Sections**
+
+| Section | Description |
+| --- | --- |
+| `[CleanupExclude]` | Files/folders to exclude from the Dat retrieval sweep (preserve on host). Supports `SmartSkip`. |
+| `[CleanupDelete]` | Files/folders inside `Dat\` to delete before retrieval (discard volatile data). Supports `SmartSkip`. |
+| `[Assets]` | Files to inject into `{Run}` once (or always if `AlwaysUpdate=1`). |
+| `[SysInjection]` | Files to copy into host system directories on launch and restore on exit. **Advanced users only.** Requires `RunAsAdmin=1`. Format: `NN=relative\src|absolute\dest`. `SkipIfExists=1` skips injection if destination already exists. |
+
+#### **SmartSkip**
+
+`SmartSkip` 컨트롤은 다음 섹션의 실행 여부를 지정.  
+`SmartSkip` control specifies whether the next section execute.
+
+`[RegistryFix]`, `[RegistryShell]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Resources]`
+
+| Value | Behavior |
+| --- | --- |
+| `0` | Always execute |
+| `1` | Execute only when environment change is detected (drive path or hostname changed) |
+| `2` | Always skip — disabled (default for Cleanup sections) |
 
 #### **[Environment] & Macros**
 
-**Macro System** : Supports a macro system for path flexibility.  
-**매크로 시스템** : 경로 유연성을 위해 매크로 시스템을 지원.
+Supports a macro system for path flexibility.  
+경로 유연성을 위해 매크로 시스템을 지원.
 
 
 * **Launcher** : `{Base}`, `{Run}`, `{Dat}`, `{Ext}`, `{Ast}`, `{Sys}`, `{Res}`, `{Exe}`, `{AppName}`, `{CommonFiles}`, `{_MIIIMEEnv}`
@@ -170,34 +187,41 @@ TargetApp_M.exe [Options]
 
 ## Companion Tools
 
-Two standalone companion utilities are provided alongside MHL.  
-미메런처의 운영을 보조하는 두 가지 독립 도구를 제공함.  
-
-> ### MIIIME Tools Manager (MTM)
-A live monitoring and management tool for launcher processes and their host-side traces.  
-런처 프로세스와 호스트 흔적을 실시간 모니터링하고 정리하는 운영 도구.  
-**Repository** : [MIIIMEToolsManager](https://github.com/miiime6248)
+Standalone companion utilities are provided alongside MHL.  
+미메런처의 운영을 보조하는 독립 도구를 제공함.  
 
 > ### MIIIME Launcher Sweeper (MLS)
 A forensic cleanup utility that detects and removes filesystem artifacts left by abnormal launcher termination.  
 런처의 비정상 종료 후 호스트에 잔류한 파일시스템 아티팩트를 탐지 · 제거하는 포렌식 정리 도구.  
-**Repository** : [MIIIMELauncherSweeper](https://github.com/miiime6248)
+- **Repository** : [MIIIMELauncherSweeper](https://github.com/miiimeworks/MLS)
+
+> ### MIIIME Tools Manager (MTM)
+A live monitoring and management tool for launcher processes and their host-side traces.  
+런처 프로세스와 호스트 흔적을 실시간 모니터링하고 정리하는 운영 도구.  
+- **Repository** : [MIIIMEToolsManager](https://github.com/miiimeworks/MTM)
+
+> ### MIIIME Universal Cleaner (MUC)
+A tool that cleans up unnecessary files and folders according to rules defined in an INI configuration file.  
+INI 설정 파일에 정의된 규칙에 따라 불필요한 파일과 폴더를 정리하는 도구.  
+- **Repository** : [MIIIMEUniversalCleaner](https://github.com/miiimeworks/MUC)
+
 
 ---
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/fd04ad5a053c5f0f9f81446991b2883598f46272c7e122627364ec447501320c?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/0c8c91d69e9870de34e3f7a8c4dc7fbb16d79a63b639755cf37e69d713fa2407?nocache=1)
+
 | Status | Details |
 | :--- | :--- |
 | **Major Vendors** | **Clean** (Passed by AhnLab V3, Kaspersky, Microsoft, Avast, ESET, etc.) |
-| **Detection Rate** | **11 / 72** (Mostly Heuristic/Generic/Trojan-type flags) |
+| **Detection Rate** | **9 / 72** (Mostly Heuristic/Generic/Trojan-type flags) |
 | **Integrity** | The source code is transparently available for verification in this repository |
 
 > This launcher was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 런처는 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `fd04ad5a053c5f0f9f81446991b2883598f46272c7e122627364ec447501320c`
+**File Checksum (SHA-256) :** `0c8c91d69e9870de34e3f7a8c4dc7fbb16d79a63b639755cf37e69d713fa2407`
 
 ---
 

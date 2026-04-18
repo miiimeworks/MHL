@@ -3,13 +3,9 @@
 ========================================================================
 
 MIIIMELauncher is not a one-click portable solution. It is a controlled execution environment.
-Instead of hiding system behavior, it exposes it.
-Instead of simplifying portability, it enforces consistency.
 Not recommended unless you have a thorough understanding of file systems and registry structures.
 
 미메런처는 원클릭 포터블 솔루션이 아닙니다. 제어된 실행 환경을 제공합니다.
-시스템 동작을 숨기는 대신 노출합니다.
-이식성을 단순화하는 대신 일관성을 강화합니다.
 파일 시스템 및 레지스트리 구조에 대한 이해가 없는 경우 사용을 권장하지 않습니다.
 
 ========================================================================
@@ -43,14 +39,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
    [포렌식 복구]
    - 세션 추적 : 크래시 감지를 위해 PID 및 Temp 잔존 흔적 모니터링.
    - 롤백 : 비정상 종료 시 `*.reg.bakk` 스냅샷을 통한 이전 상태 복원.
-   
-4. Volatility Control (Freeze Mode)
-   - Read-Only : Forces volatile state; no write-back to storage.
-   - Auto-Redirection : Relocates execution context to Host Temp on RO media (CD/ISO/Write-Protected USB).
-
-   [휘발성 제어 (동결 모드)]
-   - 읽기 전용 : 휘발성 상태 강제. 스토리지 쓰기 방지.
-   - 자동 우회 : RO 미디어(CD/ISO/USB) 감지 시 호스트 Temp로 실행 컨텍스트 자동 재배치.
 
 ========================================================================
 [Configuration]
