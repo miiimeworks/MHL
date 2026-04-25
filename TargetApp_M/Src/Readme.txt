@@ -67,24 +67,24 @@ Not recommended unless you have a thorough understanding of file systems and reg
 	│	├─ TargetApp/            	# Target Application / 원본 타겟 앱 바이너리
 	│	│
 	│	├─ Ext/					# Extra / 추가 파일
-	│ 	│	├─ Ast/        		# Assets File Injection / 1회 주입용 어셋 파일 *
-	│ 	│	├─ Sys/             		# System File Injection / 호스트 주입용 파일  
+	│ 	│	├─ Ast/        		# Assets File Injection / 1회 주입용 어셋 파일 
+	│	│	├─ Env/        		# Environment File / 환경설정용 파일	
 	│	│	├─ Org/        		# Factory Reset (Stub) / 초기화 설정 (기능 없음)
 	│	│	└─ Res/      			# UI Resources / 폴더아이콘, 스플래시 이미지	 
  	│	│
  	│	└─	RawDat/            		# Default Data Template / 데이터 초기 템플릿
 	│ 		├─ AppDat/        	# System AppData Sandbox / 시스템 앱 데이터 샌드박스
 	│          │	├─ Local/      	# %LocalAppData% 대체
-	│          │	├─  LocalLow/    	# %LocalLow% 대체
-	│          │	└─  Roaming/     	# %AppData% 대체
+	│          │	├─ LocalLow/    	# %LocalLow% 대체
+	│          │	└─ Roaming/     	# %AppData% 대체
 	│		├─ Reg/             	# Registry Templates / 주입용 .reg 템플릿	
 	│		├─ Set/      			# Portable Settings / 앱 폴더 병합용 설정 파일     
-	│		└─ Usr/             		# User Profile / 사용자 프로파일 *
+	│		└─ Usr/             		# User File / 사용자 파일 *
 	│    	   
  	└─ Dat/                   			# Active User Data / 사용자 저장소 (수정 사항 저장)
      
-			* Usr & Sys folders are for ADVANCED USERS ONLY.
-			* Usr과 Sys 폴더는 고급 사용자 전용입니다.	
+			* Usr folder is for ADVANCED USERS ONLY.
+			* Usr 폴더는 고급 사용자 전용입니다.	
 
 3. Customization
    - Core configuration via TargetApp_M.ini.
