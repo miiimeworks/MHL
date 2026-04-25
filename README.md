@@ -87,7 +87,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 ```text
 TargetApp_M/
      │
-     ├─ TargetApp_M.exe             # Launcher Executable / 런쳐 실행 파일
+     ├─ TargetApp_M.exe             # Launcher Executable / 런처 실행 파일
      ├─ TargetApp_M.ini             # Configuration File / 설정 파일
      ├─ TargetApp_M.log             # Runtime Log / 실행 로그 (활성 시 생성)
      │
@@ -118,7 +118,7 @@ TargetApp_M/
 
 **[디렉토리 구조]**
 
-* **런쳐 실행 파일** : 런처 본체 및 동작 환경 정의를 위한 설정 파일.
+* **런처 실행 파일** : 런처 본체 및 동작 환경 정의를 위한 설정 파일.
 * **App 영역** : 원본 앱 바이너리 및 사용자 데이터 초기 상태를 위한 템플릿.
 * **Dat 영역** : 사용자가 수정한 사항이 저장되는 실제 데이터 저장소.
 
