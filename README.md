@@ -236,18 +236,18 @@ Standalone companion utilities are provided alongside MHL.
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/0c8c91d69e9870de34e3f7a8c4dc7fbb16d79a63b639755cf37e69d713fa2407?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/415cc52fd2e4a5b7e7d7e231292f7336973b4d9af4d11e1aca826ef173312c34?nocache=1)
 
 | Status             | Details                                                                        |
 |:------------------ |:------------------------------------------------------------------------------ |
 | **Major Vendors**  | **Clean** (Passed by AhnLab V3, Kaspersky, Microsoft, Avast, ESET, etc.)       |
-| **Detection Rate** | **9 / 72** (Mostly Heuristic/Generic/Trojan-type flags)                        |
+| **Detection Rate** | **7 / 72** (Mostly Heuristic/Generic/Trojan-type flags)                        |
 | **Integrity**      | The source code is transparently available for verification in this repository |
 
 > This Program was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 프로그램은 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `0c8c91d69e9870de34e3f7a8c4dc7fbb16d79a63b639755cf37e69d713fa2407`
+**File Checksum (SHA-256) :** `415cc52fd2e4a5b7e7d7e231292f7336973b4d9af4d11e1aca826ef173312c34`
 
 ---
 
