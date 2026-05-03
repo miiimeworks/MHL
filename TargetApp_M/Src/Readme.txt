@@ -33,12 +33,15 @@ Not recommended unless you have a thorough understanding of file systems and reg
    - 정리 : 루트 키 가지치기 및 검증된 회수 수행.   
    
 3. Forensic Recovery
-   - Session Tracking : Monitors PID and Temp artifacts for crash detection.
+   - Session Tracking : UUID and PID monitoring for session integrity validation.
    - Rollback : Restores previous state via `*.reg.bakk` snapshots on abnormal termination.
+   - AppData Recovery : On next launch, detects `*_bakk` folders left by crash, 
+     removes orphaned Junction Points, and restores original AppData automatically. 
 
    [포렌식 복구]
-   - 세션 추적 : 크래시 감지를 위해 PID 및 Temp 잔존 흔적 모니터링.
+   - 세션 추적 : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
    - 롤백 : 비정상 종료 시 `*.reg.bakk` 스냅샷을 통한 이전 상태 복원.
+   - AppData 복구 : 다음 실행 시 크래시 잔류 `*_bakk` 폴더를 자동 탐지하여 고아 Junction 제거 및 원본 AppData 복원. 
 
 ========================================================================
 [Configuration]
@@ -67,7 +70,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 	│	├─ TargetApp/            	# Target Application / 원본 타겟 앱 바이너리
 	│	│
 	│	├─ Ext/					# Extra / 추가 파일
-	│ 	│	├─ Ast/        		# Assets File Injection / 1회 주입용 어셋 파일 
+	│ 	│	├─ Ast/        		# Assets Injection / 주입용 어셋 파일 
 	│	│	├─ Env/        		# Environment File / 환경설정용 파일	
 	│	│	├─ Org/        		# Factory Reset (Stub) / 초기화 설정 (기능 없음)
 	│	│	└─ Res/      			# UI Resources / 폴더아이콘, 스플래시 이미지	 
@@ -109,4 +112,4 @@ This is a **private project**. No technical support is provided.
 Developer	: MIIIME 
 Website		: https://www.miiime.com 
 GitHub		: @miiime6248 
-Update		: 2026.02.22
+Update		: 2026.05.01

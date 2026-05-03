@@ -96,7 +96,7 @@ TargetApp_M/
      │   ├─ TargetApp/              # Target Application / 원본 타겟 앱 바이너리
      │   │
      │   ├─ Ext/                    # Extra / 추가 파일
-     │   │   ├─ Ast/                # Assets File Injection / 1회 주입용 어셋 파일
+     │   │   ├─ Ast/                # Assets File Injection / 주입용 어셋 파일
      │   │   ├─ Env/                # Environment File / 환경설정용 파일	
      │   │   ├─ Org/                # Factory Reset (Stub) / 초기화 설정 (기능 없음)
      │   │   └─ Res/                # UI Resources / 폴더아이콘, 스플래시 이미지
@@ -134,7 +134,7 @@ Key configuration values for the launcher behavior.
 | `RunAsAdmin`           | Launch   | Bool | 1=Force Administrator privileges, 0=User mode                                                                               |
 | `UseJunction`          | Options  | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode                                                                     |
 | `FreezeMode`           | Options  | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode. |
-| `LogLevel`             | Options  | Int  | 0=Off (default), 1=INFO/WARN/ERROR, 2=All including DEBUG, 3=INFO+, 4=WARN+, 5=ERROR only                                   |
+| `LogLevel`             | Options  | Int  | 0=Off (default), 1=All including DEBUG, 2=INFO and above, 3=WARN and above, 4=ERROR only. Values outside 0–4 are treated as 0. |
 | `ProcessCheckInterval` | Advanced | Int  | Polling interval (ms) for child process monitoring                                                                          |
 
 #### **[Registry] Sections**
@@ -153,15 +153,15 @@ Key configuration values for the launcher behavior.
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[CleanupExclude]` | Files/folders to exclude from the Dat retrieval sweep (preserve on host). Supports `SmartSkip`.                                                      |
 | `[CleanupDelete]`  | Files/folders inside `Dat\` to delete before retrieval (discard volatile data). Supports `SmartSkip`.                                                |
-| `[Assets]`         | Files to inject into `{Run}` once (or always if `AlwaysUpdate=1`).                                                                                   |
- `[UserFile]`   | Files to copy into host directories on launch and restore on exit. **Advanced users only.** Requires `RunAsAdmin=1`. |
+| `[Assets]`         | Files to inject into `{Run}`. Supports `SmartSkip` (default: `1` = on environment change). `SmartSkip=0` forces overwrite on every launch; `SmartSkip=2` disables injection. |
+| `[UserFile]`   | Files to copy into host directories on launch and restore on exit. **Advanced users only.** Requires `RunAsAdmin=1`. |
 
 #### **SmartSkip**
 
 스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정.  
 `SmartSkip` control specifies whether the next section execute.
 
-`[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[UserFile]`, `[Resources]`
+`[Assets]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[UserFile]`, `[Resources]`
 
 | Value | Behavior                                                                          |
 | ----- | --------------------------------------------------------------------------------- |
@@ -192,7 +192,7 @@ TargetApp_M.exe [Options]
 | Argument  | Description                                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `--clean` | **Force Cleanup**: Deletes the entire `Dat/` directory (including all user data) and resets the environment. **Irreversible.** |
-| `--debug` | **Debug Mode**: Forces `LogLevel=2` (DEBUG) regardless of INI settings                                                         |
+| `--debug` | **Debug Mode**: Forces `LogLevel=1` (all logs including DEBUG) regardless of INI settings. |
 
 ---
 
@@ -201,24 +201,31 @@ TargetApp_M.exe [Options]
 Standalone companion utilities are provided alongside MHL.  
 미메런처의 운영을 보조하는 독립 도구를 제공함.  
 
+> ### MIIIME Icon Changer (MIC)
+> 
+> Change the icon of the launcher executable file after portable wrapping.  
+> 포터블 래핑 후 런쳐실행파일의 아이콘을 변경.
+
+- **Repository** : [MIIIMEIconChangerr](https://github.com/miiimeworks/MIC)
+
 > ### MIIIME Launcher Sweeper (MLS)
 > 
 > A forensic cleanup utility that detects and removes filesystem artifacts left by abnormal launcher termination.  
-> 런처의 비정상 종료 후 호스트에 잔류한 파일시스템 아티팩트를 탐지 · 제거하는 포렌식 정리 도구.  
+> 런처의 비정상 종료 후 호스트에 잔류한 파일시스템 아티팩트를 포렌식 탐지 · 제거.  
 
 - **Repository** : [MIIIMELauncherSweeper](https://github.com/miiimeworks/MLS)
 
 > ### MIIIME Tools Manager (MTM)
 > 
 > A live monitoring and management tool for launcher processes and their host-side traces.  
-> 런처 프로세스와 호스트 흔적을 실시간 모니터링하고 정리하는 운영 도구.  
+> 런처 프로세스와 호스트 흔적을 실시간 모니터링하고 정리.  
 
 - **Repository** : [MIIIMEToolsManager](https://github.com/miiimeworks/MTM)
 
 > ### MIIIME Universal Cleaner (MUC)
 > 
 > A tool that cleans up unnecessary files and folders according to rules defined in an INI configuration file.  
-> INI 설정 파일에 정의된 규칙에 따라 불필요한 파일과 폴더를 정리하는 도구.  
+> INI 설정 파일에 정의된 규칙에 따라 불필요한 파일과 폴더를 청소.  
 
 - **Repository** : [MIIIMEUniversalCleaner](https://github.com/miiimeworks/MUC)
 
@@ -256,7 +263,7 @@ This is a **private project**. No technical support is provided.
 **Developer** : MIIIME  
 **Website** : https://www.miiime.com  
 **GitHub** : [@miiime6248](https://github.com/miiime6248)  
-**Last Update** : 2026-02-14  
+**Last Update** : 2026-05-01  
 
 <br>
 <img width="64" height="64" alt="002" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Brutal/Logo/Neon/4b_Mium_64_0_G.png?raw=true">  
