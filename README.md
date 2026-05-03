@@ -15,6 +15,9 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 미메런처는 원클릭 포터블 솔루션이 아닙니다. 제어된 실행 환경을 제공합니다.  
 파일 시스템 및 레지스트리 구조에 대한 이해가 없는 경우 사용을 권장하지 않습니다.  
+
+<br>
+<img width="402" height="197" alt="001" src="https://github.com/miiimeworks/MHL/blob/main/Preview/001.png?raw=true" style="margin-top: 20px; margin-bottom: 20px;">
 <br>
 
 ---
