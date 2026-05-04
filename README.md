@@ -211,6 +211,13 @@ Standalone companion utilities are provided alongside MHL.
 
 - **Repository** : [MIIIMEIconChangerr](https://github.com/miiimeworks/MIC)
 
+> ### MIIIME Universal Cleaner (MUC)
+> 
+> A tool that cleans up unnecessary files and folders according to rules defined in an INI configuration file.  
+> INI 설정 파일에 정의된 규칙에 따라 불필요한 파일과 폴더를 청소.  
+
+- **Repository** : [MIIIMEUniversalCleaner](https://github.com/miiimeworks/MUC)
+
 > ### MIIIME Launcher Sweeper (MLS)
 > 
 > A forensic cleanup utility that detects and removes filesystem artifacts left by abnormal launcher termination.  
@@ -224,13 +231,6 @@ Standalone companion utilities are provided alongside MHL.
 > 런처 프로세스와 호스트 흔적을 실시간 모니터링하고 정리.  
 
 - **Repository** : [MIIIMEToolsManager](https://github.com/miiimeworks/MTM)
-
-> ### MIIIME Universal Cleaner (MUC)
-> 
-> A tool that cleans up unnecessary files and folders according to rules defined in an INI configuration file.  
-> INI 설정 파일에 정의된 규칙에 따라 불필요한 파일과 폴더를 청소.  
-
-- **Repository** : [MIIIMEUniversalCleaner](https://github.com/miiimeworks/MUC)
 
 ---
 
