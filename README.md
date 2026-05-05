@@ -177,7 +177,7 @@ Key configuration values for the launcher behavior.
 Supports a macro system for path flexibility.  
 경로 유연성을 위해 매크로 시스템을 지원.
 
-* **Launcher** : `{Base}`, `{Run}`, `{Dat}`, `{Ast}`, `{Env}`, `{Res}`, `{Ext}`, `{Usr}`, `{Exe}`, `{AppName}`, `{CommonFiles}`, `{_MIIIMEEnv}`
+* **Launcher** : `{Base}`, `{Run}`, `{Raw}`,`{Dat}`, `{Ast}`, `{Env}`, `{Res}`, `{Ext}`, `{Usr}`, `{Exe}`, `{AppName}`, `{CommonFiles}`, `{_MIIIMEEnv}`
 * **System** : `{Windows}`, `{System32}`, `{SysWOW64}`, `{ProgramFiles}`, `{ProgramFiles(x86)}`, `{ProgramData}`, `{UserProfile}`, `{Docs}`, `{Desktop}`, `{StartMenu}`, `{Programs}`, `{CommonStartMenu}`, `{CommonPrograms}`, `{Temp}`
 * **AppData** : `{Local}`, `{LocalLow}`, `{Roaming}`
 
