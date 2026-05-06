@@ -209,7 +209,7 @@ Standalone companion utilities are provided alongside MHL.
 > Change the icon of the launcher executable file after portable wrapping.  
 > 포터블 래핑 후 런쳐실행파일의 아이콘을 변경.
 
-- **Repository** : [MIIIMEIconChangerr](https://github.com/miiimeworks/MIC)
+- **Repository** : [MIIIMEIconChanger](https://github.com/miiimeworks/MIC)
 
 > ### MIIIME Universal Cleaner (MUC)
 > 
