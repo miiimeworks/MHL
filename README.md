@@ -100,7 +100,7 @@ TargetApp_M/
      │   │
      │   ├─ Ext/                    # Extra / 추가 파일
      │   │   ├─ Ast/                # Assets File Injection / 주입용 어셋 파일
-     │   │   ├─ Env/                # Environment File / 환경설정용 파일	
+     │   │   ├─ Env/                # Environment File / 환경설정용 파일    
      │   │   ├─ Org/                # Factory Reset (Stub) / 초기화 설정 (기능 없음)
      │   │   └─ Res/                # UI Resources / 폴더아이콘, 스플래시 이미지
      │   │
@@ -132,13 +132,13 @@ TargetApp_M/
 Key configuration values for the launcher behavior.  
 런처 동작을 제어하는 주요 설정 값. 
 
-| Parameter              | Section  | Type | Description                                                                                                                 |
-| ---------------------- | -------- | ---- | --------------------------------------------------------------------------------------------------------------------------- |
-| `RunAsAdmin`           | Launch   | Bool | 1=Force Administrator privileges, 0=User mode                                                                               |
-| `UseJunction`          | Options  | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode                                                                     |
-| `FreezeMode`           | Options  | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode. |
+| Parameter              | Section  | Type | Description                                                                                                                    |
+| ---------------------- | -------- | ---- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `RunAsAdmin`           | Launch   | Bool | 1=Force Administrator privileges, 0=User mode                                                                                  |
+| `UseJunction`          | Options  | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode                                                                        |
+| `FreezeMode`           | Options  | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode.    |
 | `LogLevel`             | Options  | Int  | 0=Off (default), 1=All including DEBUG, 2=INFO and above, 3=WARN and above, 4=ERROR only. Values outside 0–4 are treated as 0. |
-| `ProcessCheckInterval` | Advanced | Int  | Polling interval (ms) for child process monitoring                                                                          |
+| `ProcessCheckInterval` | Advanced | Int  | Polling interval (ms) for child process monitoring                                                                             |
 
 #### **[Registry] Sections**
 
@@ -149,22 +149,21 @@ Key configuration values for the launcher behavior.
 | `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip`.                                                                                                           |
 | `[RegistryFix]`   | Key\|Value\|Data entries to force-write on every launch (path patching). Supports `SmartSkip`.                                                                                                       |
 
-
 #### **[Filesystem] Sections**
 
-| Section            | Description                                                                                                                                          |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[CleanupExclude]` | Files/folders to exclude from the Dat retrieval sweep (preserve on host). Supports `SmartSkip`.                                                      |
-| `[CleanupDelete]`  | Files/folders inside `Dat\` to delete before retrieval (discard volatile data). Supports `SmartSkip`.                                                |
+| Section            | Description                                                                                                                                                                  |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[CleanupExclude]` | Files/folders to exclude from the Dat retrieval sweep (preserve on host). Supports `SmartSkip`.                                                                              |
+| `[CleanupDelete]`  | Files/folders inside `Dat\` to delete before retrieval (discard volatile data). Supports `SmartSkip`.                                                                        |
 | `[Assets]`         | Files to inject into `{Run}`. Supports `SmartSkip` (default: `1` = on environment change). `SmartSkip=0` forces overwrite on every launch; `SmartSkip=2` disables injection. |
-| `[UserFile]`   | Files to copy into host directories on launch and restore on exit. **Advanced users only.** Requires `RunAsAdmin=1`. |
+| `[UserFile]`       | Files to copy into host directories on launch and restore on exit. **Advanced users only.** Requires `RunAsAdmin=1`.                                                         |
 
 #### **SmartSkip**
 
 스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정.  
 `SmartSkip` control specifies whether the next section execute.
 
-`[Assets]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[UserFile]`, `[Resources]`
+`[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
 
 | Value | Behavior                                                                          |
 | ----- | --------------------------------------------------------------------------------- |
@@ -195,7 +194,7 @@ TargetApp_M.exe [Options]
 | Argument  | Description                                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `--clean` | **Force Cleanup**: Deletes the entire `Dat/` directory (including all user data) and resets the environment. **Irreversible.** |
-| `--debug` | **Debug Mode**: Forces `LogLevel=1` (all logs including DEBUG) regardless of INI settings. |
+| `--debug` | **Debug Mode**: Forces `LogLevel=1` (all logs including DEBUG) regardless of INI settings.                                     |
 
 ---
 
