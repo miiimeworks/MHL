@@ -75,24 +75,17 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 ### 1. Quick Setup
 
-- **Naming Convention** : The launcher executable and its INI file must share the same base name (e.g. `TargetApp_M.exe` and `TargetApp_M.ini`).  
-  The suffix `_M` must be included in the filename (placing it at the end is recommended) for management and identification purposes.  
-  The target executable is specified separately by `ExeName=` in `[Launch]`; it does not have to match the launcher name.
-- **Binary Placement** : Place the target application folder inside the `App/` directory.
-- **Bitness** : Build the launcher per bitness (x86 portable = x86 launcher, x64 portable = x64 launcher). Combined 32/64-bit packages are not supported.  
-  A launcher of the same bitness as the target sees the same registry views (`HKLM\SOFTWARE`) and `System32` / `SysWOW64` as the target.
-- **INI Lookup Order** : If the launcher is named `<Name>_x64_M.exe` or `<Name>_x86_M.exe`, the first existing file is used in this order:  
-  own bitness `<Name>_<bit>_M.ini` → common `<Name>_M.ini` → other bitness. Any other launcher name uses `<launcher name>.ini` only.
+- **Naming Convention** : The launcher executable and INI file must have the same name (e.g., `TargetApp_M.exe` and `TargetApp_M.ini`).  
+For management and identification, filenames must include the `x64_M`, `x86_M`, or `_M` suffix.
+- **INI Lookup Order** : If the launcher name is `<Name>_x64_M.exe` or `<Name>_x86_M.exe`, use the first existing file in the following order :  
+Self-bit `<Name>_<Bit>_M.ini` → Common `<Name>_M.ini` → Other-bit. For other names, use only `<Launcher Name>.ini`.
+**[빠른 설정]**
 
 **[빠른 설정]**
 
 - **네이밍 규칙** : 런처 실행 파일과 INI 파일은 같은 이름이어야 함 (예: `TargetApp_M.exe` 및 `TargetApp_M.ini`).  
-  관리 및 식별을 위해 파일명에 `_M` 접미사를 반드시 포함해야 하며, 끝에 두는 것을 권장.  
-  타겟 실행 파일은 `[Launch]`의 `ExeName=`으로 별도 지정하며 런처 이름과 일치할 필요 없음.  
-- **바이너리 배치** : 타겟 애플리케이션 폴더를 `App/` 디렉토리 내부에 배치.  
-- **비트** : 런처를 비트별로 따로 빌드 (x86 포터블 = x86 런처, x64 포터블 = x64 런처). 32/64비트 겸용 패키지는 지원하지 않음.  
-  타겟과 같은 비트의 런처여야 레지스트리 뷰(`HKLM\SOFTWARE`)와 `System32` / `SysWOW64` 접근이 타겟이 보는 것과 일치함.  
-- **INI 탐색 순서** : 런처 이름이 `<이름>_x64_M.exe` 또는 `<이름>_x86_M.exe` 이면 아래 순서로 처음 존재하는 파일을 사용:  
+  관리 및 식별을 위해 파일명에 `x64_M`, `x86_M` 또는 `_M` 접미사를 반드시 포함해야 함.  
+- **INI 탐색 순서** : 런처 이름이 `<이름>_x64_M.exe` 또는 `<이름>_x86_M.exe` 이면 아래 순서로 처음 존재하는 파일을 사용 :  
   자기 비트 `<이름>_<비트>_M.ini` → 공용 `<이름>_M.ini` → 다른 비트. 그 밖의 이름은 `<런처 이름>.ini` 하나만 사용.  
 
 ### 2. Directory Structure
