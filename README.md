@@ -184,10 +184,10 @@ Key configuration values for the launcher behavior.
 | `[ShortcutGuard]` | Protects same-named shortcuts/folders (`_bakk` backup before launch, restore after exit) and deletes ones the app re-creates after exit. Parameters: `Name` (list of folder or `.lnk` names, `\|Name1\|Name2\|` format), `Wait` (post-exit watch in sec, default `10`), `Interval` (poll interval in ms, default `500`). |
 | `[Resources]`     | Applies folder icon and splash image from `Ext\Res\`. Supports `SmartSkip` (default: `1`).                                                                          |
 
-#### **SmartSkip**
-
-스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정.  
-`SmartSkip` control specifies whether the section executes.
+#### **[SmartSkip] Control**
+ 
+`SmartSkip` control specifies whether the section executes.  
+스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정. 
 
 `[Registry]`, `[RegistryRoot]`, `[RegistryTrace]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
 
@@ -196,14 +196,6 @@ Key configuration values for the launcher behavior.
 | `0`   | Always execute                                                                    |
 | `1`   | Execute only when environment change is detected (drive path, hostname, or user name changed) |
 | `2`   | Always skip — disabled                                                            |
-
-섹션별 기본값 / Default SmartSkip per section:
-
-| Default | Sections                                                                       |
-| ------- | ------------------------------------------------------------------------------ |
-| `0`     | `[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[UserFile]`                |
-| `1`     | `[RegistryFix]`, `[FileWrite]`, `[Assets]`, `[Resources]` |
-| `2`     | `[RegistryTrace]`, `[CleanupExclude]`, `[CleanupDelete]`                       |
 
 #### **[Environment] & Macros**
 
