@@ -2,10 +2,10 @@
 		MIIIME Hybrid Launcher (MHL™)
 ========================================================================
 
-MIIIMELauncher is not a one-click portable solution. It is a controlled execution environment.
+This is Portable Launcher.
 Not recommended unless you have a thorough understanding of file systems and registry structures.
 
-미메런처는 원클릭 포터블 솔루션이 아닙니다. 제어된 실행 환경을 제공합니다.
+포터블런쳐입니다.
 파일 시스템 및 레지스트리 구조에 대한 이해가 없는 경우 사용을 권장하지 않습니다.
 
 ========================================================================
@@ -23,15 +23,17 @@ Not recommended unless you have a thorough understanding of file systems and reg
    - 안전성 : 파일 잠김 발생 시 스마트 재시도 로직을 통해 데이터 무결성 보장.
 
 2. Registry Management
-   - Injection : Seamless integration of HKCU keys.
+   - Injection : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
    - Integrity : Hashing (MD5) applied to long key paths during backup.
    - Cleanup : Root key pruning and verified retrieval.
+   - Trace : Optional deletion of execution traces (MUICache, UserAssist, etc.) on exit.
 
    [레지스트리 관리]
-   - 주입 : HKCU 키의 무결절 통합.
+   - 주입 : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
    - 무결성 : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
-   - 정리 : 루트 키 가지치기 및 검증된 회수 수행.   
-   
+   - 정리 : 루트 키 가지치기 및 검증된 회수 수행.
+   - 흔적 : 종료 시 실행 흔적(MUICache, UserAssist 등) 선택적 삭제.
+
 3. Forensic Recovery
    - Session Tracking : UUID and PID monitoring for session integrity validation.
    - Rollback : Restores previous state via `*.reg.bakk` snapshots on abnormal termination.
@@ -48,14 +50,20 @@ Not recommended unless you have a thorough understanding of file systems and reg
 ========================================================================
 
 1. Setup
-   - Naming Convention : The filenames TargetApp_M.exe and TargetApp_M.ini must match the name of the target executable file.
-     The suffix _M must be included at the end of the filename for management and identification purposes.
+   - Naming Convention : The launcher executable and its INI file must share the same base name (e.g. TargetApp_M.exe and TargetApp_M.ini).
+     The suffix _M must be included in the filename (placing it at the end is recommended) for management and identification purposes.
+     The target executable is specified separately by ExeName= in [Launch].
    - Binary Placement : Place the target application folder inside the App/ directory.
+   - Bitness : Build the launcher per bitness (x86 portable = x86 launcher, x64 portable = x64 launcher).
+   - INI Lookup : For TargetApp_x64_M.exe / TargetApp_x86_M.exe, the first existing INI is used: own bitness -> TargetApp_M.ini -> other bitness.
 
    [설치]
-   - 네이밍 규칙 : TargetApp_M.exe 및 TargetApp_M.ini 파일명은 타겟 실행 파일과 일치해야 하며,
-     관리 및 식별을 위해 파일명 끝에 반드시 _M 접미사를 포함 해야 함.
+   - 네이밍 규칙 : 런처 실행 파일과 INI 파일은 같은 이름이어야 하며 (예: TargetApp_M.exe 및 TargetApp_M.ini),
+     관리 및 식별을 위해 파일명에 _M 접미사를 반드시 포함 해야 함 (끝에 두는 것을 권장).
+     타겟 실행 파일은 [Launch]의 ExeName=으로 별도 지정.
    - 바이너리 배치 : 타겟 애플리케이션 폴더를 App/ 디렉토리 내부에 배치.
+   - 비트 : 런처를 비트별로 따로 빌드 (x86 포터블 = x86 런처, x64 포터블 = x64 런처).
+   - INI 탐색 : TargetApp_x64_M.exe / TargetApp_x86_M.exe 이면 자기 비트 -> TargetApp_M.ini -> 다른 비트 순으로 처음 존재하는 INI 사용.
 
 2. Directory Structure (상세 폴더 구조) 
 
@@ -87,10 +95,16 @@ Not recommended unless you have a thorough understanding of file systems and reg
  	└─ Dat/                   			# Active User Data / 사용자 저장소 (수정 사항 저장)
      
 			* Usr folder is for ADVANCED USERS ONLY.
-			* Usr 폴더는 고급 사용자 전용입니다.	
+			* Usr 폴더는 고급 사용자 전용.	
 
 3. Customization
    - Core configuration via TargetApp_M.ini.
+   - Available sections (INI order / INI 섹션 순서):
+     Launch, Directories, Environment, Options,
+     ProcessWatch, ProcessKill,
+     Registry, RegistryRoot, RegistryTrace, RegistryShell, RegistryFix,
+     FileWrite, CleanupExclude, CleanupDelete, Assets, UserFile,
+     ShortcutGuard, Resources, Advanced
 
    [사용자 정의]
    - TargetApp_M.ini를 통한 코어 설정.
@@ -112,4 +126,4 @@ This is a **private project**. No technical support is provided.
 Developer	: MIIIME 
 Website		: https://www.miiime.com 
 GitHub		: @miiimeworks 
-Update		: 2026.05.01
+Update		: 2026.10.15

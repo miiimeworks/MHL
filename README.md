@@ -10,10 +10,10 @@ MIIIMELauncher · 미메런처 · ミメランチャー<br>
 <img width="559" height="136" alt="001" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Enhanced/Id/Neon/4b_136_1_G.png?raw=true" style="margin-top: 20px; margin-bottom: 20px;">
 <br>
 
-MIIIMELauncher is not a one-click portable solution. It is a controlled execution environment.  
+This is Portable Launcher.
 Not recommended unless you have a thorough understanding of file systems and registry structures.
 
-미메런처는 원클릭 포터블 솔루션이 아닙니다. 제어된 실행 환경을 제공합니다.  
+포터블런쳐입니다. 
 파일 시스템 및 레지스트리 구조에 대한 이해가 없는 경우 사용을 권장하지 않습니다.  
 
 <br>
@@ -47,13 +47,13 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 ### 2. Registry Management
 
-- **Injection** : Seamless integration of HKCU keys.
+- **Injection** : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
 - **Integrity** : Hashing (MD5) applied to long key paths during backup.
 - **Cleanup** : Root key pruning and verified retrieval.
 
 **[레지스트리 관리]**
 
-- **주입** : HKCU 키의 무결절 통합.
+- **주입** : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
 - **무결성** : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
 - **정리** : 루트 키 가지치기 및 검증된 회수 수행.
 
@@ -61,13 +61,13 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 - **Session Tracking** : Validates session integrity via UUID and PID monitoring.
 - **Rollback** : Transaction-based recovery using `*.reg.bakk` snapshots.
-- **AppData Recovery** : On next launch, detects `*_bakk` folders left by abnormal termination, removes orphaned Junction Points, and restores the original AppData directories automatically. Controlled by `CrashRecovery=` in `[Launch]` (`1`=enabled by default, `0`=disabled).
+- **AppData Recovery** : On next launch, detects `*_bakk` folders left by abnormal termination, removes orphaned Junction Points, and restores the original AppData directories automatically. Registry changes are rolled back the same way. Controlled by `CrashRecovery=` in `[Launch]` (`1`=enabled by default, `0`=disabled).
 
 **[포렌식 복구]**
 
 - **세션 추적** : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
 - **롤백** : 트랜잭션 기반의 스냅샷(`*.reg.bakk`)을 이용한 정밀 복구.
-- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 `*_bakk` 폴더를 자동 탐지하여 고아 Junction을 제거하고 원본 AppData를 복원. `[Launch]` 섹션의 `CrashRecovery=`로 제어 (`1`=활성(기본값), `0`=비활성).
+- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 `*_bakk` 폴더를 자동 탐지하여 고아 Junction을 제거하고 원본 AppData를 복원. 레지스트리 변경도 같은 방식으로 롤백. `[Launch]` 섹션의 `CrashRecovery=`로 제어 (`1`=활성(기본값), `0`=비활성).
 
 ---
 
@@ -75,15 +75,25 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 ### 1. Quick Setup
 
-- **Naming Convention** : The filenames `TargetApp_M.exe` and `TargetApp_M.ini` must match the name of the target executable file.  
-  The suffix `_M` must be included at the end of the filename for management and identification purposes.
+- **Naming Convention** : The launcher executable and its INI file must share the same base name (e.g. `TargetApp_M.exe` and `TargetApp_M.ini`).  
+  The suffix `_M` must be included in the filename (placing it at the end is recommended) for management and identification purposes.  
+  The target executable is specified separately by `ExeName=` in `[Launch]`; it does not have to match the launcher name.
 - **Binary Placement** : Place the target application folder inside the `App/` directory.
+- **Bitness** : Build the launcher per bitness (x86 portable = x86 launcher, x64 portable = x64 launcher). Combined 32/64-bit packages are not supported.  
+  A launcher of the same bitness as the target sees the same registry views (`HKLM\SOFTWARE`) and `System32` / `SysWOW64` as the target.
+- **INI Lookup Order** : If the launcher is named `<Name>_x64_M.exe` or `<Name>_x86_M.exe`, the first existing file is used in this order:  
+  own bitness `<Name>_<bit>_M.ini` → common `<Name>_M.ini` → other bitness. Any other launcher name uses `<launcher name>.ini` only.
 
 **[빠른 설정]**
 
-- **네이밍 규칙** : `TargetApp_M.exe` 및 `TargetApp_M.ini` 파일명은 타겟 실행 파일과 일치해야 하며,  
-  관리 및 식별을 위해 파일명 끝에 반드시 `_M` 접미사를 포함 해야 함.  
+- **네이밍 규칙** : 런처 실행 파일과 INI 파일은 같은 이름이어야 함 (예: `TargetApp_M.exe` 및 `TargetApp_M.ini`).  
+  관리 및 식별을 위해 파일명에 `_M` 접미사를 반드시 포함해야 하며, 끝에 두는 것을 권장.  
+  타겟 실행 파일은 `[Launch]`의 `ExeName=`으로 별도 지정하며 런처 이름과 일치할 필요 없음.  
 - **바이너리 배치** : 타겟 애플리케이션 폴더를 `App/` 디렉토리 내부에 배치.  
+- **비트** : 런처를 비트별로 따로 빌드 (x86 포터블 = x86 런처, x64 포터블 = x64 런처). 32/64비트 겸용 패키지는 지원하지 않음.  
+  타겟과 같은 비트의 런처여야 레지스트리 뷰(`HKLM\SOFTWARE`)와 `System32` / `SysWOW64` 접근이 타겟이 보는 것과 일치함.  
+- **INI 탐색 순서** : 런처 이름이 `<이름>_x64_M.exe` 또는 `<이름>_x86_M.exe` 이면 아래 순서로 처음 존재하는 파일을 사용:  
+  자기 비트 `<이름>_<비트>_M.ini` → 공용 `<이름>_M.ini` → 다른 비트. 그 밖의 이름은 `<런처 이름>.ini` 하나만 사용.  
 
 ### 2. Directory Structure
 
@@ -116,7 +126,7 @@ TargetApp_M/
      └─ Dat/                        # Active User Data / 사용자 저장소 (수정 사항 저장)
 
             * Usr folder is for ADVANCED USERS ONLY.
-            * Usr 폴더는 고급 사용자 전용입니다.
+            * Usr 폴더는 고급 사용자 전용.
 ```
 
 **[디렉토리 구조]**
@@ -132,51 +142,88 @@ TargetApp_M/
 Key configuration values for the launcher behavior.  
 런처 동작을 제어하는 주요 설정 값. 
 
-| Parameter              | Section  | Type | Description                                                                                                                    |
-| ---------------------- | -------- | ---- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `RunAsAdmin`           | Launch   | Bool | 1=Force Administrator privileges, 0=User mode                                                                                  |
-| `UseJunction`          | Options  | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode                                                                        |
-| `FreezeMode`           | Options  | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode.    |
-| `LogLevel`             | Options  | Int  | 0=Off (default), 1=All including DEBUG, 2=INFO and above, 3=WARN and above, 4=ERROR only. Values outside 0–4 are treated as 0. |
-| `ProcessCheckInterval` | Advanced | Int  | Polling interval (ms) for child process monitoring                                                                             |
+| Parameter                | Section  | Type | Description                                                                                                                    |
+| ------------------------ | -------- | ---- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `RunAsAdmin`             | Launch   | Bool | 1=Force Administrator privileges, 0=User mode                                                                                  |
+| `UseJunction`            | Options  | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode                                                                        |
+| `FreezeMode`             | Options  | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode.    |
+| `LogLevel`               | Options  | Int  | 0=Off (default), 1=All including DEBUG, 2=INFO and above, 3=WARN and above, 4=ERROR only. Values outside 0–4 are treated as 0. |
+| `ProcessCheckInterval`   | Advanced | Int  | Polling interval (ms) for child process monitoring (default: `200`)                                                            |
+| `ExitThreshold`          | Advanced | Int  | Consecutive missed polls before process exit is declared (default: `2`)                                                        |
+| `CrashRecovery`          | Launch   | Bool | 1=Auto-recover orphaned `_bakk` folders on next launch (default), 0=Disabled                                                   |
+| `AllowMultipleInstances` | Launch   | Bool | 1=Allow multiple concurrent instances, 0=Block (default)                                                                       |
+| `DetectReadOnly`         | Options  | Bool | 1=Check for read-only media and exit with a message if detected (default), 0=Skip the check |
+| `AddCommand`             | Options  | Str  | Additional command-line arguments appended to the target executable on launch                                                  |
+| `WorkDir`                | Launch   | Str  | Working directory for the target executable (default: same directory as `{Run}`)                                               |
+
+#### **[Path Override] Sections**
+
+| Section         | Description                                                                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[Directories]` | Override default directory layout. Keys: `RunPath` (default: `App\TargetApp`), `RawDataPath` (`App\RawDat`), `ExtPath` (`App\Ext`), `DataPath` (`Dat`). All paths relative to the launcher. |
+| `[Environment]` | Environment variables and shared paths. Keys `CommonFilesDir` (default: `..\CommonFiles`) and `_MIIIMEEnvDir` (default: `..\_MIIIMEEnv`) override the `{CommonFiles}` / `{_MIIIMEEnv}` macro paths. Any other `NAME=value` sets an environment variable for the target; `PATH01`–`PATH99` extend `PATH`. Macros can be used in values. |
+
+#### **[Process] Sections**
+
+| Section          | Description                                                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[ProcessWatch]` | Additional processes to monitor alongside the main executable (for multi-process apps). Cleanup begins when all watched processes have exited. |
+| `[ProcessKill]`  | Processes to forcefully terminate before cleanup. Restricted to executables within `{Run}`.                                                    |
 
 #### **[Registry] Sections**
 
-| Section           | Description                                                                                                                                                                                          |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[Registry]`      | Registry keys to back up on launch, inject from `Dat\Reg\KeyNN.reg`, retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). |
-| `[RegistryRoot]`  | Parent keys to prune if empty after `[Registry]` cleanup.                                                                                                                                            |
-| `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip`.                                                                                                           |
-| `[RegistryFix]`   | Key\|Value\|Data entries to force-write on every launch (path patching). Supports `SmartSkip`.                                                                                                       |
+| Section           | Description                                                                                                                                                                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[Registry]`      | Registry keys (HKCU / HKLM `\SOFTWARE`) to back up on launch, inject from `Dat\Reg\<KeyName>.reg` (named after the INI key, e.g. `01=` → `01.reg`), retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). Supports `SmartSkip` (default: `0`). |
+| `[RegistryRoot]`  | Parent keys to prune if empty after `[Registry]` cleanup. Supports `SmartSkip` (default: `0`).                                                                                                                                            |
+| `[RegistryTrace]` | Execution trace cleanup run on exit. Deletes specified HKCU value names (e.g. MUICache, UserAssist). Supports `SmartSkip` (default: `2` — must be explicitly enabled).                                                                    |
+| `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip` (default: `0`).                                                                                                                                 |
+| `[RegistryFix]`   | Key\|Value\|Data entries to force-write on every launch (path patching). Supports `SmartSkip` (default: `1`).                                                                                                                             |
 
 #### **[Filesystem] Sections**
 
-| Section            | Description                                                                                                                                                                  |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[CleanupExclude]` | Files/folders to exclude from the Dat retrieval sweep (preserve on host). Supports `SmartSkip`.                                                                              |
-| `[CleanupDelete]`  | Files/folders inside `Dat\` to delete before retrieval (discard volatile data). Supports `SmartSkip`.                                                                        |
-| `[Assets]`         | Files to inject into `{Run}`. Supports `SmartSkip` (default: `1` = on environment change). `SmartSkip=0` forces overwrite on every launch; `SmartSkip=2` disables injection. |
-| `[UserFile]`       | Files to copy into host directories on launch and restore on exit. **Advanced users only.** Requires `RunAsAdmin=1`.                                                         |
+| Section            | Description                                                                                                                                                                             |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[FileWrite]`      | In-place file patching on launch: string replace/append, or key-value line update (Type A/B/C). Wildcard path supported. Supports `SmartSkip` (default: `1`).                           |
+| `[CleanupExclude]` | Keep only the listed items in a folder and delete the rest (wildcards supported). Targets local absolute paths allowed by the built-in safety guard; runs on exit. Supports `SmartSkip` (default: `2`). |
+| `[CleanupDelete]`  | Files/folders to delete on exit (wildcards supported). Targets local absolute paths allowed by the built-in safety guard. Supports `SmartSkip` (default: `2`). |
+| `[Assets]`         | Files to inject into `{Run}` or `{Dat}`. Supports `SmartSkip` (default: `1` = on environment change). `SmartSkip=0` forces overwrite on every launch; `SmartSkip=2` disables injection. |
+| `[UserFile]`       | Files to copy into host directories on launch and restore on exit. **Advanced users only.** Admin privileges may be required depending on target paths.                                 |
+
+#### **[Post-App] Sections**
+
+| Section           | Description                                                                                                                                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[ShortcutGuard]` | Protects same-named shortcuts/folders (`_bakk` backup before launch, restore after exit) and deletes ones the app re-creates after exit. Parameters: `Name` (list of folder or `.lnk` names, `\|Name1\|Name2\|` format), `Wait` (post-exit watch in sec, default `10`), `Interval` (poll interval in ms, default `500`). |
+| `[Resources]`     | Applies folder icon and splash image from `Ext\Res\`. Supports `SmartSkip` (default: `1`).                                                                          |
 
 #### **SmartSkip**
 
 스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정.  
-`SmartSkip` control specifies whether the next section execute.
+`SmartSkip` control specifies whether the section executes.
 
-`[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
+`[Registry]`, `[RegistryRoot]`, `[RegistryTrace]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
 
 | Value | Behavior                                                                          |
 | ----- | --------------------------------------------------------------------------------- |
 | `0`   | Always execute                                                                    |
-| `1`   | Execute only when environment change is detected (drive path or hostname changed) |
-| `2`   | Always skip — disabled (default for Cleanup sections)                             |
+| `1`   | Execute only when environment change is detected (drive path, hostname, or user name changed) |
+| `2`   | Always skip — disabled                                                            |
+
+섹션별 기본값 / Default SmartSkip per section:
+
+| Default | Sections                                                                       |
+| ------- | ------------------------------------------------------------------------------ |
+| `0`     | `[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[UserFile]`                |
+| `1`     | `[RegistryFix]`, `[FileWrite]`, `[Assets]`, `[Resources]` |
+| `2`     | `[RegistryTrace]`, `[CleanupExclude]`, `[CleanupDelete]`                       |
 
 #### **[Environment] & Macros**
 
 Supports a macro system for path flexibility.  
 경로 유연성을 위해 매크로 시스템을 지원.
 
-* **Launcher** : `{Base}`, `{Run}`, `{Raw}`,`{Dat}`, `{Ast}`, `{Env}`, `{Res}`, `{Ext}`, `{Usr}`, `{Exe}`, `{AppName}`, `{CommonFiles}`, `{_MIIIMEEnv}`
+* **Launcher** : `{Base}`, `{Run}`, `{Raw}`, `{Dat}`, `{Ast}`, `{Env}`, `{Res}`, `{Ext}`, `{Usr}`, `{Exe}`, `{Launcher}`, `{ExeROT13}`, `{LauncherROT13}`, `{AppName}`, `{CommonFiles}`, `{_MIIIMEEnv}`
 * **System** : `{Windows}`, `{System32}`, `{SysWOW64}`, `{ProgramFiles}`, `{ProgramFiles(x86)}`, `{ProgramData}`, `{UserProfile}`, `{Docs}`, `{Desktop}`, `{StartMenu}`, `{Programs}`, `{CommonStartMenu}`, `{CommonPrograms}`, `{Temp}`
 * **AppData** : `{Local}`, `{LocalLow}`, `{Roaming}`
 
@@ -193,8 +240,11 @@ TargetApp_M.exe [Options]
 
 | Argument  | Description                                                                                                                    |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `--clean` | **Force Cleanup**: Deletes the entire `Dat/` directory (including all user data) and resets the environment. **Irreversible.** |
+| `--clean` | **Force Cleanup**: Deletes the entire `Dat/` directory (including all user data) and resets the environment. **Irreversible.** Ignored in `FreezeMode`. |
 | `--debug` | **Debug Mode**: Forces `LogLevel=1` (all logs including DEBUG) regardless of INI settings.                                     |
+
+Any other argument is passed through to the target application.  
+그 밖의 인수는 타겟 앱에 그대로 전달됨.
 
 ---
 
@@ -235,18 +285,18 @@ Standalone companion utilities are provided alongside MHL.
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/415cc52fd2e4a5b7e7d7e231292f7336973b4d9af4d11e1aca826ef173312c34?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/b8c8f6bfe1cda986ae49bd9df6a10b16cb9e7d6dd3ebcc991eae9bf6b355b39d?nocache=1)
 
 | Status             | Details                                                                        |
 |:------------------ |:------------------------------------------------------------------------------ |
 | **Major Vendors**  | **Clean** (Passed by AhnLab V3, Kaspersky, Microsoft, Avast, ESET, etc.)       |
-| **Detection Rate** | **7 / 72** (Mostly Heuristic/Generic/Trojan-type flags)                        |
-| **Integrity**      | The source code is transparently available for verification in this repository |
+| **Detection Rate** | **4 / 71** (Mostly Heuristic/Generic/Trojan-type flags)                        |
+| **Integrity**      | The source is private, and the distribution files can be verified using hashes and VirusTotal results. |
 
 > This Program was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 프로그램은 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `415cc52fd2e4a5b7e7d7e231292f7336973b4d9af4d11e1aca826ef173312c34`
+**File Checksum (SHA-256) :** `b8c8f6bfe1cda986ae49bd9df6a10b16cb9e7d6dd3ebcc991eae9bf6b355b39d`
 
 ---
 
@@ -265,7 +315,7 @@ This is a **private project**. No technical support is provided.
 **Developer** : MIIIME  
 **Website** : https://www.miiime.com  
 **GitHub** : [@miiimeworks](https://github.com/miiimeworks)  
-**Last Update** : 2026-05-04   
+**Last Update** : 2026-10-15   
 
 <br>
 <img width="64" height="64" alt="002" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Brutal/Logo/Neon/4b_Mium_64_0_G.png?raw=true">  
