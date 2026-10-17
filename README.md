@@ -10,7 +10,7 @@ MIIIMELauncher · 미메런처 · ミメランチャー<br>
 <img width="559" height="136" alt="001" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Enhanced/Id/Neon/4b_136_1_G.png?raw=true" style="margin-top: 20px; margin-bottom: 20px;">
 <br>
 
-This is Portable Launcher.
+This is Portable Launcher.  
 Not recommended unless you have a thorough understanding of file systems and registry structures.
 
 포터블런쳐입니다. 
