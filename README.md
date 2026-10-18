@@ -77,12 +77,12 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 ### 1. Quick Setup
 
-- **Naming Convention** : The launcher executable and INI file must have the same name (e.g., `TargetApp_M.exe` and `TargetApp_M.ini`). For management and identification, filenames must include the `x64_M`, `x86_M`, or `_M` suffix.
+- **Naming Convention** : The launcher executable and INI file must have the same name (e.g., `TargetApp_M.exe` and `TargetApp_M.ini`). For management and identification, filenames must include the `_M` suffix.
 
 **[빠른 설정]**
 
 - **네이밍 규칙** : 런처 실행 파일과 INI 파일은 같은 이름이어야 함 (예: `TargetApp_M.exe` 및 `TargetApp_M.ini`). 
-  관리 및 식별을 위해 파일명에 `x64_M`, `x86_M` 또는 `_M` 접미사를 반드시 포함해야 함.  
+  관리 및 식별을 위해 파일명에 `_M` 접미사를 반드시 포함해야 함.  
 
 ### 2. Directory Structure
 
