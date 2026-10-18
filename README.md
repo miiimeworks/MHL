@@ -50,12 +50,14 @@ Not recommended unless you have a thorough understanding of file systems and reg
 - **Injection** : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
 - **Integrity** : Hashing (MD5) applied to long key paths during backup.
 - **Cleanup** : Root key pruning and verified retrieval.
+- **Trace** : Optional deletion of execution traces (MUICache, UserAssist) on exit. Enabled by `TraceClean=1` in `[Launch]`; the list can be customized in `Ext\etc\Trace.ini`.
 
 **[레지스트리 관리]**
 
 - **주입** : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
 - **무결성** : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
 - **정리** : 루트 키 가지치기 및 검증된 회수 수행.
+- **흔적** : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제. `[Launch]`의 `TraceClean=1`로 활성화하며, 목록은 `Ext\etc\Trace.ini`로 변경 가능.
 
 ### 3. Forensic Recovery
 
@@ -98,6 +100,7 @@ TargetApp_M/
      │   ├─ Ext/                    # Extra / 추가 파일
      │   │   ├─ Ast/                # Assets File Injection / 주입용 어셋 파일
      │   │   ├─ Env/                # Environment File / 환경설정용 파일    
+     │   │   ├─ etc/                # Misc Settings / 기타 설정 (Trace.ini)
      │   │   ├─ Org/                # Factory Reset (Stub) / 초기화 설정 (기능 없음)
      │   │   └─ Res/                # UI Resources / 폴더아이콘, 스플래시 이미지
      │   │
@@ -138,6 +141,7 @@ Key configuration values for the launcher behavior.
 | `ProcessCheckInterval`   | Advanced | Int  | Polling interval (ms) for child process monitoring (default: `200`)                                                            |
 | `ExitThreshold`          | Advanced | Int  | Consecutive missed polls before process exit is declared (default: `2`)                                                        |
 | `CrashRecovery`          | Launch   | Bool | 1=Auto-recover orphaned `_bakk` folders on next launch (default), 0=Disabled                                                   |
+| `TraceClean`             | Launch   | Bool | 1=Delete execution traces (MUICache, UserAssist) on exit, 0=Disabled (default). Custom list: `Ext\etc\Trace.ini` (replaces the built-in list; see `Trace_Sample.ini`) |
 | `AllowMultipleInstances` | Launch   | Bool | 1=Allow multiple concurrent instances, 0=Block (default)                                                                       |
 | `DetectReadOnly`         | Options  | Bool | 1=Check for read-only media and exit with a message if detected (default), 0=Skip the check |
 | `AddCommand`             | Options  | Str  | Additional command-line arguments appended to the target executable on launch                                                  |
@@ -163,7 +167,6 @@ Key configuration values for the launcher behavior.
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[Registry]`      | Registry keys (HKCU / HKLM `\SOFTWARE`) to back up on launch, inject from `Dat\Reg\<KeyName>.reg` (named after the INI key, e.g. `01=` → `01.reg`), retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). Supports `SmartSkip` (default: `0`). |
 | `[RegistryRoot]`  | Parent keys to prune if empty after `[Registry]` cleanup. Supports `SmartSkip` (default: `0`).                                                                                                                                            |
-| `[RegistryTrace]` | Execution trace cleanup run on exit. Deletes specified HKCU value names (e.g. MUICache, UserAssist). Supports `SmartSkip` (default: `2` — must be explicitly enabled).                                                                    |
 | `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip` (default: `0`).                                                                                                                                 |
 | `[RegistryFix]`   | Key\|Value\|Data entries to force-write on every launch (path patching). Supports `SmartSkip` (default: `1`).                                                                                                                             |
 
@@ -189,7 +192,7 @@ Key configuration values for the launcher behavior.
 `SmartSkip` control specifies whether the section executes.  
 스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정. 
 
-`[Registry]`, `[RegistryRoot]`, `[RegistryTrace]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
+`[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
 
 | Value | Behavior                                                                          |
 | ----- | --------------------------------------------------------------------------------- |
