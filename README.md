@@ -264,7 +264,7 @@ Standalone companion utilities are provided alongside MHL.
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/b8c8f6bfe1cda986ae49bd9df6a10b16cb9e7d6dd3ebcc991eae9bf6b355b39d?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/6072dbd34f341707b2c511df51d5a2ccc2cc29de8d6e4ed18055a88bfd5485e8?nocache=1)
 
 | Status             | Details                                                                        |
 |:------------------ |:------------------------------------------------------------------------------ |
@@ -275,7 +275,7 @@ Standalone companion utilities are provided alongside MHL.
 > This Program was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 프로그램은 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `b8c8f6bfe1cda986ae49bd9df6a10b16cb9e7d6dd3ebcc991eae9bf6b355b39d`
+**File Checksum (SHA-256) :** `6072dbd34f341707b2c511df51d5a2ccc2cc29de8d6e4ed18055a88bfd5485e8`
 
 ---
 
