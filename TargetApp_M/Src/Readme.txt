@@ -81,7 +81,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
 	│ 	│	├─ Ast/        		# Assets Injection / 주입용 어셋 파일 
 	│	│	├─ Env/        		# Environment File / 환경설정용 파일	
 	│	│	├─ etc/        		# Misc Settings / 기타 설정 (Trace.ini)
-	│	│	├─ Org/        		# Factory Reset (Stub) / 초기화 설정 (기능 없음)
 	│	│	└─ Res/      			# UI Resources / 폴더아이콘, 스플래시 이미지	 
  	│	│
  	│	└─	RawDat/            		# Default Data Template / 데이터 초기 템플릿
