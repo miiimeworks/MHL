@@ -50,26 +50,26 @@ Not recommended unless you have a thorough understanding of file systems and reg
 - **Injection** : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
 - **Integrity** : Hashing (MD5) applied to long key paths during backup.
 - **Cleanup** : Root key pruning and verified retrieval.
-- **Trace** : Optional deletion of execution traces (MUICache, UserAssist) on exit. Enabled by `TraceClean=1` in `[Launch]`; the list can be customized in `Ext\etc\Trace.ini`.
+- **Trace** : Optional deletion of execution traces (MUICache, UserAssist) on exit.
 
 **[레지스트리 관리]**
 
 - **주입** : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
 - **무결성** : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
 - **정리** : 루트 키 가지치기 및 검증된 회수 수행.
-- **흔적** : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제. `[Launch]`의 `TraceClean=1`로 활성화하며, 목록은 `Ext\etc\Trace.ini`로 변경 가능.
+- **흔적** : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제.
 
 ### 3. Forensic Recovery
 
 - **Session Tracking** : Validates session integrity via UUID and PID monitoring.
 - **Rollback** : Transaction-based recovery using `*.reg.bakk` snapshots.
-- **AppData Recovery** : On next launch, detects `*_bakk` folders left by abnormal termination, removes orphaned Junction Points, and restores the original AppData directories automatically. Registry changes are rolled back the same way. Controlled by `CrashRecovery=` in `[Launch]` (`1`=enabled by default, `0`=disabled).
+- **AppData Recovery** : On next launch, detects `*_bakk` folders left by abnormal termination, removes orphaned Junction Points, and restores the original AppData directories automatically. 
 
 **[포렌식 복구]**
 
 - **세션 추적** : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
-- **롤백** : 트랜잭션 기반의 스냅샷(`*.reg.bakk`)을 이용한 정밀 복구.
-- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 `*_bakk` 폴더를 자동 탐지하여 고아 Junction을 제거하고 원본 AppData를 복원. 레지스트리 변경도 같은 방식으로 롤백. `[Launch]` 섹션의 `CrashRecovery=`로 제어 (`1`=활성(기본값), `0`=비활성).
+- **롤백** : 트랜잭션 기반의 스냅샷(`*.reg.bakk`)을 이용한 복구.
+- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 `*_bakk` 폴더를 자동 탐지하여 고아 Junction을 제거하고 원본 AppData를 복원. 
 
 ---
 
