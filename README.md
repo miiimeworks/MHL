@@ -47,14 +47,14 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 ### 2. Registry Management
 
-- **Injection** : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
+- **Injection** : Seamless integration of HKCU / HKLM keys.
 - **Integrity** : Hashing (MD5) applied to long key paths during backup.
 - **Cleanup** : Root key pruning and verified retrieval.
 - **Trace** : Optional deletion of execution traces (MUICache, UserAssist) on exit.
 
 **[레지스트리 관리]**
 
-- **주입** : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
+- **주입** : HKCU / HKLM 키의 무결절 통합.
 - **무결성** : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
 - **정리** : 루트 키 가지치기 및 검증된 회수 수행.
 - **흔적** : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제.
