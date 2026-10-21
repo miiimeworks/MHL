@@ -69,7 +69,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 - **세션 추적** : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
 - **롤백** : 트랜잭션 기반의 스냅샷을 이용한 복구.
-- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 폴더를 자동 탐지하여 고아 Junction을 제거하고 원본 AppData를 복원. 
+- **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 폴더를 자동 탐지, 고아 Junction을 제거하고 원본 AppData를 복원. 
 
 ---
 
