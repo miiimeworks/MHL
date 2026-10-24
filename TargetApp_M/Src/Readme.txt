@@ -26,13 +26,13 @@ Not recommended unless you have a thorough understanding of file systems and reg
    - Injection : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
    - Integrity : Hashing (MD5) applied to long key paths during backup.
    - Cleanup : Root key pruning and verified retrieval.
-   - Trace : Optional deletion of execution traces (MUICache, UserAssist) on exit (TraceClean=1 in [Launch]; custom list via Ext/etc/Trace.ini).
+   - Trace : Optional deletion of execution traces (MUICache, UserAssist) on exit (enable with SmartSkip=0 in [TraceClean]; targets: {Exe} / {Launcher}).
 
    [레지스트리 관리]
    - 주입 : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
    - 무결성 : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
    - 정리 : 루트 키 가지치기 및 검증된 회수 수행.
-   - 흔적 : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제 ([Launch]의 TraceClean=1, 목록은 Ext/etc/Trace.ini로 변경 가능).
+   - 흔적 : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제 ([TraceClean]의 SmartSkip=0 으로 사용, 대상: {Exe} / {Launcher}).
 
 3. Forensic Recovery
    - Session Tracking : UUID and PID monitoring for session integrity validation.
@@ -80,7 +80,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
 	│	├─ Ext/					# Extra / 추가 파일
 	│ 	│	├─ Ast/        		# Assets Injection / 주입용 어셋 파일 
 	│	│	├─ Env/        		# Environment File / 환경설정용 파일	
-	│	│	├─ etc/        		# Misc Settings / 기타 설정 (Trace.ini)
 	│	│	└─ Res/      			# UI Resources / 폴더아이콘, 스플래시 이미지	 
  	│	│
  	│	└─	RawDat/            		# Default Data Template / 데이터 초기 템플릿
@@ -104,7 +103,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
      ProcessWatch, ProcessKill,
      Registry, RegistryRoot, RegistryShell, RegistryFix,
      FileWrite, CleanupExclude, CleanupDelete, Assets, UserFile,
-     ShortcutGuard, Resources, Advanced
+     ShortcutGuard, TraceClean, Resources, Advanced
 
    [사용자 정의]
    - TargetApp_M.ini를 통한 코어 설정.
@@ -126,4 +125,4 @@ This is a **private project**. No technical support is provided.
 Developer	: MIIIME 
 Website		: https://www.miiime.com 
 GitHub		: @miiimeworks 
-Update		: 2026.10.15
+Update		: 2026.10.24

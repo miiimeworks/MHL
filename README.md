@@ -100,7 +100,6 @@ TargetApp_M/
      │   ├─ Ext/                    # Extra / 추가 파일
      │   │   ├─ Ast/                # Assets File Injection / 주입용 어셋 파일
      │   │   ├─ Env/                # Environment File / 환경설정용 파일    
-     │   │   ├─ etc/                # Misc Settings / 기타 설정 (Trace.ini)
      │   │   └─ Res/                # UI Resources / 폴더아이콘, 스플래시 이미지
      │   │
      │   └─ RawDat/                 # Default Data Template / 데이터 초기 템플릿
@@ -140,7 +139,6 @@ Key configuration values for the launcher behavior.
 | `ProcessCheckInterval`   | Advanced | Int  | Polling interval (ms) for child process monitoring (default: `200`)                                                            |
 | `ExitThreshold`          | Advanced | Int  | Consecutive missed polls before process exit is declared (default: `2`)                                                        |
 | `CrashRecovery`          | Launch   | Bool | 1=Auto-recover orphaned `_bakk` folders on next launch (default), 0=Disabled                                                   |
-| `TraceClean`             | Launch   | Bool | 1=Delete execution traces (MUICache, UserAssist) on exit, 0=Disabled (default). Custom list: `Ext\etc\Trace.ini` (replaces the built-in list; see `Trace_Sample.ini`) |
 | `AllowMultipleInstances` | Launch   | Bool | 1=Allow multiple concurrent instances, 0=Block (default)                                                                       |
 | `DetectReadOnly`         | Options  | Bool | 1=Check for read-only media and exit with a message if detected (default), 0=Skip the check |
 | `AddCommand`             | Options  | Str  | Additional command-line arguments appended to the target executable on launch                                                  |
@@ -184,6 +182,7 @@ Key configuration values for the launcher behavior.
 | Section           | Description                                                                                                                                                         |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[ShortcutGuard]` | Protects same-named shortcuts/folders (`_bakk` backup before launch, restore after exit) and deletes ones the app re-creates after exit. Parameters: `Name` (list of folder or `.lnk` names, `\|Name1\|Name2\|` format), `Wait` (post-exit watch in sec, default `10`), `Interval` (poll interval in ms, default `500`). |
+| `[TraceClean]`    | Deletes execution traces (MUICache, UserAssist) of the target exe and/or launcher on exit. Parameters: `SmartSkip` (`0`/`1`=enable, `2`=disable, default: `2`), `Name` (`\|{Exe}\|`, `\|{Launcher}\|` or `\|{Exe}\|{Launcher}\|`), and timing options `TraceCleanWait` / `TraceCleanIdleWait` / `TraceCleanPollMs` / `TraceCleanStepDelay`. |
 | `[Resources]`     | Applies folder icon and splash image from `Ext\Res\`. Supports `SmartSkip` (default: `1`).                                                                          |
 
 #### **[SmartSkip] Control**
@@ -266,18 +265,18 @@ Standalone companion utilities are provided alongside MHL.
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/6072dbd34f341707b2c511df51d5a2ccc2cc29de8d6e4ed18055a88bfd5485e8?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/273f0162e0d03c9a80ac8846560dd5d6314fa3bbafc1a0d2daf386c162a91eeb?nocache=1)
 
 | Status             | Details                                                                        |
 |:------------------ |:------------------------------------------------------------------------------ |
 | **Major Vendors**  | **Clean** (Passed by AhnLab V3, Kaspersky, Microsoft, Avast, ESET, etc.)       |
-| **Detection Rate** | **4 / 71** (Mostly Heuristic/Generic/Trojan-type flags)                        |
+| **Detection Rate** | **5 / 71** (Mostly Heuristic/Generic/Trojan-type flags)                        |
 | **Integrity**      | Private project; verified via hashes and VT results. 						  |
 
 > This Program was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 프로그램은 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `6072dbd34f341707b2c511df51d5a2ccc2cc29de8d6e4ed18055a88bfd5485e8`
+**File Checksum (SHA-256) :** `273f0162e0d03c9a80ac8846560dd5d6314fa3bbafc1a0d2daf386c162a91eeb`
 
 ---
 
@@ -296,7 +295,7 @@ This is a **private project**. No technical support is provided.
 **Developer** : MIIIME  
 **Website** : https://www.miiime.com  
 **GitHub** : [@miiimeworks](https://github.com/miiimeworks)  
-**Last Update** : 2026-10-15   
+**Last Update** : 2026-10-24   
 
 <br>
 <img width="64" height="64" alt="002" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Brutal/Logo/Neon/4b_Mium_64_0_G.png?raw=true">  
