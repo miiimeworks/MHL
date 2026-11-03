@@ -51,6 +51,8 @@ Not recommended unless you have a thorough understanding of file systems and reg
 - **Integrity** : Hashing (MD5) applied to long key paths during backup.
 - **Cleanup** : Root key pruning and verified retrieval.
 - **Trace** : Optional deletion of execution traces (MUICache, UserAssist) on exit.
+- **Shared Area** : Optional deletion, on exit, of values with matching names in registry areas shared by several programs (e.g. `OpenWithProgids`). Host-owned values are protected.
+- **Conflict Check** : If another launcher is using the same registry key, the launch is stopped with a warning.
 
 **[레지스트리 관리]**
 
@@ -58,6 +60,8 @@ Not recommended unless you have a thorough understanding of file systems and reg
 - **무결성** : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
 - **정리** : 루트 키 가지치기 및 검증된 회수 수행.
 - **흔적** : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제.
+- **공용 영역** : 여러 프로그램이 함께 쓰는 레지스트리 영역(예: `OpenWithProgids`)에서 이름이 일치하는 값만 종료 시 선택적 삭제. 호스트 소유 값은 보호.
+- **충돌 검사** : 다른 런처가 같은 레지스트리 키를 사용 중이면 경고 후 실행 중단.
 
 ### 3. Forensic Recovery
 
@@ -70,6 +74,28 @@ Not recommended unless you have a thorough understanding of file systems and reg
 - **세션 추적** : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
 - **롤백** : 트랜잭션 기반의 스냅샷을 이용한 복구.
 - **AppData 복구** : 다음 실행 시 비정상 종료로 잔류한 폴더를 자동 탐지, 고아 Junction을 제거하고 원본 AppData를 복원. 
+
+### 4. Shell Integration
+
+- **File Association** : Registers extension / ProgID / icon / open command on launch and removes them on exit (HKCU by default, HKLM optional).  
+- **Shell Extension** : Registers COM shell extension DLLs (context menu / drag-and-drop / property sheet handlers; HKLM, requires administrator rights). Apps with more than one server DLL are supported (a DLL can be set per CLSID).  
+- **Host Protection** : Host keys are backed up before writing and restored on exit. `HostSkip` skips registration when the host already has its own installation.
+
+**[셸 통합]**
+
+- **파일 연결** : 실행 시 확장자 / ProgID / 아이콘 / 열기 명령을 등록하고 종료 시 제거 (기본 HKCU, HKLM 선택).
+- **셸 확장** : COM 셸 확장 DLL 등록 (우클릭 / 드래그 / 속성 시트 핸들러. HKLM, 관리자 권한 필요). 서버 DLL 이 둘 이상인 앱도 지원 (CLSID 별로 DLL 지정 가능).
+- **호스트 보호** : 쓰기 전 호스트 키를 백업하고 종료 시 복원. `HostSkip` 으로 호스트 설치본이 있으면 등록을 건너뜀.
+
+### 5. Multiple Instances
+
+- **Primary / Secondary** : With `AllowMultipleInstances=1`, the first launcher is the primary instance and later launchers are secondary instances. Secondary instances reuse the environment prepared by the primary and skip recovery, injection, registration and cleanup.  
+- **Cleanup** : The primary instance waits until every target exe in its folder has exited, then performs the cleanup once.
+
+**[다중 인스턴스]**
+
+- **주 / 보조** : `AllowMultipleInstances=1` 이면 먼저 실행된 런처가 주 인스턴스, 이후 런처는 보조 인스턴스. 보조 인스턴스는 주 인스턴스가 만든 환경을 그대로 쓰며 복구 · 주입 · 등록 · 정리를 하지 않음.
+- **정리** : 주 인스턴스가 폴더 안의 타겟 exe 가 모두 종료될 때까지 기다린 뒤 정리를 한 번만 수행.
 
 ---
 
@@ -123,6 +149,18 @@ TargetApp_M/
 * **App 영역** : 원본 앱 바이너리 및 사용자 데이터 초기 상태를 위한 템플릿.
 * **Dat 영역** : 사용자가 수정한 사항이 저장되는 실제 데이터 저장소.
 
+**AppDat Sub-folder Rule / AppDat 하위 폴더 규칙**
+
+- Each folder directly under `Local` / `LocalLow` / `Roaming` is injected and retrieved as a whole. A folder that contains only sub-folders and no files is treated as a path-only folder: the launcher descends into it, and the lowest folders become the targets (a folder with at least one file, or an empty one, is a target).  
+  e.g. `Local\Temp\App` + `Local\Vendor` → `Temp` is left alone; `Temp\App` and `Vendor` are both injected / retrieved.  
+  To make a sub-folder-only folder a target as a whole, put one file in it.  
+  A path-only folder missing on the host is created on injection and removed on exit if empty; existing folders are left alone.
+
+- `Local` / `LocalLow` / `Roaming` 바로 아래 폴더를 통째로 주입 · 회수함. 폴더 안에 하위 폴더만 있고 파일이 하나도 없으면 경로용 폴더로 보고 그 안으로 내려가서 가장 아래 폴더를 대상으로 삼음 (파일이 하나라도 있거나 비어 있는 폴더가 대상).  
+  예) `Local\Temp\App` + `Local\Vendor` → `Temp` 는 건드리지 않고 `Temp\App` 와 `Vendor` 둘 다 주입 · 회수.  
+  하위 폴더만 있는 폴더를 통째로 대상으로 삼으려면 그 안에 파일을 하나 둘 것.  
+  경로용 폴더가 호스트에 없으면 주입 때 만들고 종료 때 비어 있으면 제거. 이미 있던 폴더는 건드리지 않음.
+
 ### 3. Technical Specification (`ini`)
 
 #### **[INI Parameters] (`TargetApp_M.ini`)**
@@ -139,7 +177,7 @@ Key configuration values for the launcher behavior.
 | `ProcessCheckInterval`   | Advanced | Int  | Polling interval (ms) for child process monitoring (default: `200`)                                                            |
 | `ExitThreshold`          | Advanced | Int  | Consecutive missed polls before process exit is declared (default: `2`)                                                        |
 | `CrashRecovery`          | Launch   | Bool | 1=Auto-recover orphaned `_bakk` folders on next launch (default), 0=Disabled                                                   |
-| `AllowMultipleInstances` | Launch   | Bool | 1=Allow multiple concurrent instances, 0=Block (default)                                                                       |
+| `AllowMultipleInstances` | Launch   | Bool | 1=Allow multiple concurrent instances (first launcher = primary, later ones = secondary; recovery, injection and cleanup are done once by the primary), 0=Block (default) |
 | `DetectReadOnly`         | Options  | Bool | 1=Check for read-only media and exit with a message if detected (default), 0=Skip the check |
 | `AddCommand`             | Options  | Str  | Additional command-line arguments appended to the target executable on launch                                                  |
 | `WorkDir`                | Launch   | Str  | Working directory for the target executable (default: same directory as `{Run}`)                                               |
@@ -162,9 +200,11 @@ Key configuration values for the launcher behavior.
 
 | Section           | Description                                                                                                                                                                                                                               |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[Registry]`      | Registry keys (HKCU / HKLM `\SOFTWARE`) to back up on launch, inject from `Dat\Reg\<KeyName>.reg` (named after the INI key, e.g. `01=` → `01.reg`), retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). Supports `SmartSkip` (default: `0`). |
+| `[Registry]`      | Registry keys (HKCU / HKLM `\SOFTWARE`) to back up on launch, inject from `Dat\Reg\<KeyName>.reg` (named after the INI key, e.g. `01=` → `01.reg`), retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). Shared areas (`Explorer\FileExts\...`, `OpenWithProgids`, `OpenWithList`) are ignored; use `[SharedClean]`. Supports `SmartSkip` (default: `0`). |
 | `[RegistryRoot]`  | Parent keys to prune if empty after `[Registry]` cleanup. Supports `SmartSkip` (default: `0`).                                                                                                                                            |
 | `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip` (default: `0`).                                                                                                                                 |
+| `[RegistryAssoc]` | File associations (extension → ProgID → open command / icon) registered on launch and removed on exit. HKCU by default, `Scope=HKLM` for HKLM (admin). `HostSkip=1` skips the section when the host already has the same ProgID. Supports `SmartSkip` (default: `0`). |
+| `[ShellExt]`      | COM shell extensions (context menu / drag-and-drop / property sheet handlers; HKLM, admin required). Server DLL via `Dll=`, or per CLSID with the optional 3rd field (`CLSID\|{GUID}\|{Run}\Other.dll`) for multi-DLL apps. `HostSkip=1` protects a host install. Supports `SmartSkip` (default: `0`). |
 | `[RegistryFix]`   | Key\|Value\|Data entries to force-write on every launch (path patching). Supports `SmartSkip` (default: `1`).                                                                                                                             |
 
 #### **[Filesystem] Sections**
@@ -182,6 +222,7 @@ Key configuration values for the launcher behavior.
 | Section           | Description                                                                                                                                                         |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[ShortcutGuard]` | Protects same-named shortcuts/folders (`_bakk` backup before launch, restore after exit) and deletes ones the app re-creates after exit. Parameters: `Name` (list of folder or `.lnk` names, `\|Name1\|Name2\|` format), `Wait` (post-exit watch in sec, default `10`), `Interval` (poll interval in ms, default `500`). |
+| `[SharedClean]`   | On exit, deletes only registry values whose **name** matches, in areas shared by several programs (default, HKCU only: `Classes` and `Explorer\FileExts`, down to `OpenWithProgids`). One-way delete (no backup / restore); values that already existed at launch are protected; nameless (Default) values and keys are never deleted. Parameters: `SmartSkip` (`0`/`1`=enable, `2`=disable, default: `2`), `Name` (`\|WinMount.~\|` format, wildcards `~` `^`, at least 3 literal characters). |
 | `[TraceClean]`    | Deletes execution traces (MUICache, UserAssist) of the target exe and/or launcher on exit. Parameters: `SmartSkip` (`0`/`1`=enable, `2`=disable, default: `2`), `Name` (`\|{Exe}\|`, `\|{Launcher}\|` or `\|{Exe}\|{Launcher}\|`), and timing options `TraceCleanWait` / `TraceCleanIdleWait` / `TraceCleanPollMs` / `TraceCleanStepDelay`. |
 | `[Resources]`     | Applies folder icon and splash image from `Ext\Res\`. Supports `SmartSkip` (default: `1`).                                                                          |
 
@@ -190,7 +231,7 @@ Key configuration values for the launcher behavior.
 `SmartSkip` control specifies whether the section executes.  
 스마트스킵 컨트롤은 다음 섹션의 실행 여부를 지정. 
 
-`[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[Resources]`
+`[Registry]`, `[RegistryRoot]`, `[RegistryShell]`, `[RegistryAssoc]`, `[ShellExt]`, `[RegistryFix]`, `[FileWrite]`, `[CleanupExclude]`, `[CleanupDelete]`, `[Assets]`, `[UserFile]`, `[SharedClean]`, `[TraceClean]`, `[Resources]`
 
 | Value | Behavior                                                                          |
 | ----- | --------------------------------------------------------------------------------- |
@@ -295,7 +336,7 @@ This is a **private project**. No technical support is provided.
 **Developer** : MIIIME  
 **Website** : https://www.miiime.com  
 **GitHub** : [@miiimeworks](https://github.com/miiimeworks)  
-**Last Update** : 2026-10-24   
+**Last Update** : 2026-11-01   
 
 <br>
 <img width="64" height="64" alt="002" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Brutal/Logo/Neon/4b_Mium_64_0_G.png?raw=true">  

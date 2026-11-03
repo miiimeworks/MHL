@@ -27,12 +27,18 @@ Not recommended unless you have a thorough understanding of file systems and reg
    - Integrity : Hashing (MD5) applied to long key paths during backup.
    - Cleanup : Root key pruning and verified retrieval.
    - Trace : Optional deletion of execution traces (MUICache, UserAssist) on exit (enable with SmartSkip=0 in [TraceClean]; targets: {Exe} / {Launcher}).
+   - Shared Area : Optional deletion, on exit, of values with matching names in registry areas shared by several programs (e.g. OpenWithProgids).
+     Host-owned values are protected (enable with SmartSkip=0 in [SharedClean]).
+   - Conflict Check : If another launcher is using the same registry key, the launch is stopped with a warning.
 
    [레지스트리 관리]
    - 주입 : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
    - 무결성 : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
    - 정리 : 루트 키 가지치기 및 검증된 회수 수행.
    - 흔적 : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제 ([TraceClean]의 SmartSkip=0 으로 사용, 대상: {Exe} / {Launcher}).
+   - 공용 영역 : 여러 프로그램이 함께 쓰는 레지스트리 영역(예: OpenWithProgids)에서 이름이 일치하는 값만 종료 시 선택적 삭제.
+     호스트 소유 값은 보호 ([SharedClean]의 SmartSkip=0 으로 사용).
+   - 충돌 검사 : 다른 런처가 같은 레지스트리 키를 사용 중이면 경고 후 실행 중단.
 
 3. Forensic Recovery
    - Session Tracking : UUID and PID monitoring for session integrity validation.
@@ -44,6 +50,28 @@ Not recommended unless you have a thorough understanding of file systems and reg
    - 세션 추적 : UUID 및 PID 모니터링을 통한 세션 무결성 검증.
    - 롤백 : 비정상 종료 시 `*.reg.bakk` 스냅샷을 통한 이전 상태 복원.
    - AppData 복구 : 다음 실행 시 크래시 잔류 `*_bakk` 폴더를 자동 탐지하여 고아 Junction 제거 및 원본 AppData 복원. 
+
+4. Shell Integration
+   - File Association : Registers extension / ProgID / icon / open command on launch and removes them on exit (HKCU by default, HKLM optional).
+   - Shell Extension : Registers COM shell extension DLLs (context menu / drag-and-drop / property sheet handlers; HKLM, requires administrator rights).
+     Apps with more than one server DLL are supported (a DLL can be set per CLSID).
+   - Host Protection : Host keys are backed up before writing and restored on exit. HostSkip skips registration when the host already has its own installation.
+
+   [셸 통합]
+   - 파일 연결 : 실행 시 확장자 / ProgID / 아이콘 / 열기 명령을 등록하고 종료 시 제거 (기본 HKCU, HKLM 선택).
+   - 셸 확장 : COM 셸 확장 DLL 등록 (우클릭 / 드래그 / 속성 시트 핸들러. HKLM, 관리자 권한 필요).
+     서버 DLL 이 둘 이상인 앱도 지원 (CLSID 별로 DLL 지정 가능).
+   - 호스트 보호 : 쓰기 전 호스트 키를 백업하고 종료 시 복원. HostSkip 으로 호스트 설치본이 있으면 등록을 건너뜀.
+
+5. Multiple Instances
+   - Primary / Secondary : With AllowMultipleInstances=1, the first launcher is the primary instance and later launchers are secondary instances.
+     Secondary instances reuse the environment prepared by the primary and skip recovery, injection, registration and cleanup.
+   - Cleanup : The primary instance waits until every target exe in its folder has exited, then performs the cleanup once.
+
+   [다중 인스턴스]
+   - 주 / 보조 : AllowMultipleInstances=1 이면 먼저 실행된 런처가 주 인스턴스, 이후 런처는 보조 인스턴스.
+     보조 인스턴스는 주 인스턴스가 만든 환경을 그대로 쓰며 복구 · 주입 · 등록 · 정리를 하지 않음.
+   - 정리 : 주 인스턴스가 폴더 안의 타겟 exe 가 모두 종료될 때까지 기다린 뒤 정리를 한 번만 수행.
 
 ========================================================================
 [Configuration]
@@ -96,14 +124,28 @@ Not recommended unless you have a thorough understanding of file systems and reg
 			* Usr folder is for ADVANCED USERS ONLY.
 			* Usr 폴더는 고급 사용자 전용.	
 
+   - AppDat Sub-folder Rule / AppDat 하위 폴더 규칙 :
+     Each folder directly under Local / LocalLow / Roaming is injected and retrieved as a whole.
+     A folder that contains only sub-folders and no files is treated as a path-only folder: the launcher descends into it,
+     and the lowest folders become the targets (a folder with at least one file, or an empty one, is a target).
+     e.g. Local\Temp\App + Local\Vendor -> Temp is left alone; Temp\App and Vendor are both injected / retrieved.
+     To make a sub-folder-only folder a target as a whole, put one file in it.
+     A path-only folder missing on the host is created on injection and removed on exit if empty; existing folders are left alone.
+
+     Local / LocalLow / Roaming 바로 아래 폴더를 통째로 주입 · 회수함.
+     폴더 안에 하위 폴더만 있고 파일이 하나도 없으면 경로용 폴더로 보고 그 안으로 내려가서 가장 아래 폴더를 대상으로 삼음 (파일이 하나라도 있거나 비어 있는 폴더가 대상).
+     예) Local\Temp\App + Local\Vendor -> Temp 는 건드리지 않고 Temp\App 와 Vendor 둘 다 주입 · 회수.
+     하위 폴더만 있는 폴더를 통째로 대상으로 삼으려면 그 안에 파일을 하나 둘 것.
+     경로용 폴더가 호스트에 없으면 주입 때 만들고 종료 때 비어 있으면 제거. 이미 있던 폴더는 건드리지 않음.
+
 3. Customization
    - Core configuration via TargetApp_M.ini.
    - Available sections (INI order / INI 섹션 순서):
      Launch, Directories, Environment, Options,
      ProcessWatch, ProcessKill,
-     Registry, RegistryRoot, RegistryShell, RegistryFix,
+     Registry, RegistryRoot, RegistryShell, RegistryAssoc, ShellExt, RegistryFix,
      FileWrite, CleanupExclude, CleanupDelete, Assets, UserFile,
-     ShortcutGuard, TraceClean, Resources, Advanced
+     ShortcutGuard, SharedClean, TraceClean, Resources, Advanced
 
    [사용자 정의]
    - TargetApp_M.ini를 통한 코어 설정.
@@ -125,4 +167,4 @@ This is a **private project**. No technical support is provided.
 Developer	: MIIIME 
 Website		: https://www.miiime.com 
 GitHub		: @miiimeworks 
-Update		: 2026.10.24
+Update		: 2026.11.01

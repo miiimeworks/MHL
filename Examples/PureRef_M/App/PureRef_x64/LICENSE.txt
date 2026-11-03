@@ -1,0 +1,106 @@
+PUREREF - END USER LICENSE AGREEMENT
+
+PLEASE READ THIS END-USER LICENSE AGREEMENT (“EULA”) CAREFULLY BEFORE COMPLETING THE INSTALLATION PROCESS AND/OR USING THE PUREREF SOFTWARE. THIS EULA PROVIDES YOU WITH A LICENSE TO USE PUREREF (THE “SOFTWARE”) AND CONTAINS WARRANTY INFORMATION AND LIABILITY DISCLAIMERS. BY DOWNLOADING AND/OR USING THIS SOFTWARE, YOU ARE AGREEING TO BECOME BOUND BY THE TERMS AND CONDITIONS OF THIS LICENSE AGREEMENT. THE PUREREF SOFTWARE IS PROTECTED BY COPYRIGHT LAWS AND INTERNATIONAL COPYRIGHT TREATIES, AS WELL AS OTHER INTELLECTUAL PROPERTY LAWS AND TREATIES. PUREREF IS LICENSED, NOT SOLD, BY IDYLLIC PIXEL AB.
+
+1 Definitions
+
+"Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+
+"You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+
+"Legal Entity" shall mean Legal Person, Organization or other Association or Authority and shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity, using the Software for any kind of commercial purposes. For the purposes of this definition, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+
+"School" shall mean any school, university, institute for higher education or other association and institution established for learning, public or private.
+
+"Commercial License" shall mean a valid and active commercial license to use the Software, paid for and issued to a Legal Entity and/or every individual user within the Legal Entity in accordance with terms and conditions of this EULA and our website https://www.pureref.com/.
+
+2 Introduction
+
+This End-User License Agreement is a legal agreement between You and Idyllic Pixel AB, a Swedish company, with the address Etsarvägen 1, 121 43, Johanneshov, Sweden with corporate company number 559161-7435. This EULA governs Your acquisition and/or use of our PureRef software ("Software") and on terms otherwise stated on our website https://www.pureref.com/.
+
+This EULA applies regardless of whether You as an individual have purchased the Software, or downloaded it for free, or as a Legal Entity acquired a required commercial license. By clicking "accept" or installing and/or using the Software, You are confirming Your acceptance of the Software and agreeing to become bound by the terms of this EULA.
+
+If You are entering into this EULA on behalf of a Legal Entity, You represent that You have the authority to bind such entity and its affiliates to these terms and conditions. If You do not have such authority or if You do not agree with the terms and conditions of this EULA, do not install or use the Software, and You must not accept this EULA.
+
+The terms in this EULA also apply to any updates of the Software, supplements, internet-based services, and support services for the Software, unless other terms accompany those items on delivery. If so, those terms apply.
+
+3 License grant
+
+The licensor hereby grants You a limited, non-exclusive, non-assignable, non-sublicensable, revocable license to use the Software in accordance with the terms of this EULA and applicable terms and conditions on our website https://www.pureref.com/.
+
+3.1 You are permitted to install the Software (for example on a PC, laptop, mobile or tablet) on all supporting operating systems. You are responsible for ensuring Your device meets the minimum requirements of the Software. You are permitted to make copies of the Software for backup purposes.
+
+3.2 A school is permitted to copy and distribute the Software within the school to pupils and students to be used for educational purposes.
+
+3.3 You agree to abide by all applicable laws and regulations when using the Software. Your continued access to the Software and right to use the Software is subject to proper conduct. Without limiting Licensors' rights to control the Software’s environment, and the conduct of the End Users within that environment, Licensor prohibits the following practices, and You are not allowed to:
+- Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things.
+- You are not permitted to resell, rent or sell the Software.
+- Distribution of the Software in accordance with section 3.1-3.2 has to be done aimed and controlled to the recipient. You may not distribute the Software in a way that enables persons outside a Legal Entity or School to gain access to a copy of the Software. You may for instance not distribute the Software on a public website.
+- Use Your own or a third-party software, the Software or any information accessible through the Software, to bypass or modify any Software login architecture or create or provide any other means through which any Software may be accessed and/or the Software may be used by others in ways other than those intended by Licensor.
+
+3.4 If You are a Legal Entity, You may not use the Software without a paid for Commercial License (except the Beta Version as specified in section 9). Further, a Legal Entity is not permitted to copy and distribute the Software within the Legal Entity and/or subsidiary entities, divisions and business units and/or its and/or their respective employees, directors, officers, agents, shareholders, etc., unless the Legal Entity first purchases a Commercial License for each and every user of the Software in the Legal Entity ("a per seat" license). The applicable Legal Entity is only required to evaluate the number of seat licenses ("seats") or licenses required for compliance to this Section 3.4 once every calendar year, provided the Legal Entity is using reasonable good faith efforts to be in compliance herewith. For the avoidance of doubt, these limitations do not apply to licensees who are not Legal Entities.
+
+3.5 Notwithstanding Section 3.4 above, if You are, or is representing, a Legal Entity, You may, allow, permit the use of, or distribute the Software to one-time end users or end users using the Software for viewing purposes only (i.e. viewing previously created files by other end users) which do not engage in any other use of the Software provided that such end users are employees or hired contractors of the applicable Legal Entity, and further provided that the Legal Entity is committed to, and agrees to in the future, acquire licenses for each and every end user within the organization which is accessing the Software and who is not a one-time end user or an end user using the Software for viewing purposes only.
+
+4 Products and services
+
+LICENSOR RESERVES THE RIGHT TO ADD, MODIFY, OR DELETE/CANCEL THE SOFTWARE, INCLUDING YOUR ACCESS TO THE SOFTWARE AT ANY TIME. LICENSOR MAKES NO REPRESENTATION OR WARRANTY AS TO THE COMPLETENESS OR ACCURACY OF THE SOFTWARE NOR DOES IT REPRESENT OR WARRANT THAT THE SOFTWARE WILL BE AVAILABLE AT ALL TIMES OR AT ANY TIME. THE SOFTWARE MAY BE INCOMPLETE, MAY CONTAIN ERRORS ETC. THE SOFTWARE IS DELIVERED ON AN “AS IS” BASIS.
+
+5 Payment
+
+If You are using a commercial license to use the Software, You agree to fully pay for the applicable services contained in such commercial license which You have ordered. You are responsible for providing Licensor with valid credit card information to secure payment. Licensor reserves the right to cancel any order if the credit card information You provide is not valid. Payment may be processed in cooperation with third-party payment service providers, like PayPal etc. Licensor may amend the fees and payment terms at any time after giving required notice. If any fees are subject to any type of applicable taxes, Licensor may charge You for any such taxes, in addition to any fees.
+
+ALL FEES ARE PAYABLE IN ADVANCE AND ARE NOT REFUNDABLE IN WHOLE OR IN PART.
+
+6 Registration and warranties
+
+You acknowledge and agree that You will (a) provide true, accurate, current, and complete information as requested when registering an account; and (b) maintain and update this registration information to keep it true, accurate, current, and complete. You represent and warrant that (i) You are not located in a country that is subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a “terrorist supporting” country; and (ii) You are not listed on any U.S. Government lists of prohibited or restricted parties. You are solely responsible for maintaining the confidentiality of Your account and password and for restricting access to any computer, smartphone, tablet etc. that You use for accessing the Software and You hereby accept sole responsibility for all activities that occur under Your account or password. You warrant that You will not, under any circumstances, whether intentionally, or through negligence or inaction, allow or enable others to access Your account. Licensor, its affiliates and service providers reserve the right to restrict or terminate access to the Software, refuse service, terminate accounts, remove or edit content, or cancel orders in its sole discretion for any reason whatsoever, including, without limitation, if You provide registration information which is false, inaccurate, not current, or incomplete.
+
+7 Support
+
+The Software is provided "as is" and does not come with any specific support of any kind beyond what is stated in this EULA and on our website https://www.pureref.com/.
+
+8 Intellectual property
+
+You acknowledge and agree that all content, design elements, and materials available in the Software, for example graphics, logos, designs, objects, environments, icons, scripts, and service names ("Licensor's Content"), are owned by the Licensor and/or its partners and licensors and are protected by copyrights, trademarks, patents, trade secrets, and/or other proprietary rights of the Licensor and/or its partners and licensors. The Licensor and its partners and licensors retain all right, title, and interest in and to the Licensor's Content. You may not use, copy, reproduce, modify, republish, upload, post, transmit, or distribute any Licensor's Content in any form or for any means unless expressly permitted in this EULA. The Licensor's trademarks and trade dress may not be used, including as part of trademarks and/or as part of domain names, in connection with any product or service in any manner that is likely to cause confusion and may not be copied, imitated, or used, in whole or in part, without the prior written permission of the Licensor. In addition, You may not sell, license, rent, perform, display, create derivative works from, or in any way use or exploit Licensor's Content in any way unless expressly permitted in this EULA. You agree not to disassemble, decompile, or reverse engineer any software or another component of the Software or Licensor’s Content. Unless explicitly stated herein, nothing in this EULA shall be construed as conferring to You any license to intellectual property rights, whether by estoppel, implication, or otherwise. You agree not to assert against the Licensor any claim, action, or proceeding for infringement of any patents, patent rights, or other intellectual property rights.
+
+The names, logos, characters, brands and product and service names appearing in the Software and related services are trademarks/service marks or registered trademarks/service marks of Licensor or third parties (the respective holders). The use of any such trademark or service mark without the expressed written consent of the respective holder is strictly prohibited.
+
+9 Specific terms for use of the beta version
+
+Licensor may, but is not obligated to, at some or all times, offer a beta version of the Software (the “Beta Version”), which You may, if so offered, use either by itself or in combination with a commercial license for the Software. If You choose to download the Beta Version then conditioned on Your compliance with the following terms in addition to Your compliance with the terms of this EULA, Licensor grants You a limited, non-exclusive, non-assignable, non-sublicensable license to access, download and use the Beta Version and any related available documentation. Licensor owns all right, title and interest in the Beta Version, and the same rights as specified in section 8 applies to the Beta Version.
+
+You acknowledge that You understand that the Beta Version is a pre-release software and may be incomplete or could contain errors or inaccuracies. You expressly acknowledge and agree that any use of the Beta Version is done entirely at Your own risk, including any and all risk with regards to commercial use, use with data, or any other use important for Your ongoing business. Licensor is not responsible for any costs, expenses or other liabilities You may incur as a result of using the Beta Version, including but not limited to any damage, loss, or corruption of any software, information or data. The Beta Version may not be compatible with the Software. You understand that use of the Beta Version may impact Your use of the Software. Licensor expressly disclaims any liability arising from Your use of the Beta Version.
+
+The Software and the Beta Versions are released in chronological order, using numbered versions to indicate release. You may use the Beta Version as e.g., a trial of the Software or to try new features, however If You are using the Software or the Beta Version for a commercial purpose and there is an up-to-date version of the Software available which corresponds to (or is later than) the Beta Version You are using, You may not use the Beta Version as a means of avoiding payment for commercial licensing fees, and Licensor retains the right to terminate Your license to the Software and/or Beta Version if it deems that You are consistently using the Beta Version to avoid payment of licensing fees while using the Software/Beta Version for commercial use.
+
+10 Limitation of liability
+
+In no event shall Idyllic Pixel AB be liable for any damages due to use, inability of use, errors during use, or possession of the Software, to the maximum extent permitted by law. This includes without limitation, lost profits, business interruption, or lost information. In no event will Idyllic Pixel AB be liable for loss of data or for indirect, special, incidental, consequential (including lost profit), however arising (including negligence) or other damages, even if You have been advised of the possibility of such damages. Idyllic Pixel AB shall have no liability with respect to the content of the Software or any part thereof, including but not limited to errors or omissions contained therein, libel, trademark rights, business interruption, loss of privacy or the disclosure of confidential information.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, LICENSORS' ENTIRE LIABILITY UNDER ANY PROVISION OF THIS EULA SHALL BE LIMITED TO THE AMOUNT ACTUALLY PAID BY YOU FOR THE SOFTWARE, PRODUCTS, AND SERVICES DURING THE CALENDAR YEAR WHEN THE CLAIM IS MADE.
+
+11 Disclaimer of warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+WITHOUT LIMITING THE FOREGOING, LICENSOR MAKES NO REPRESENTATION OR WARRANTY OF ANY KIND, EXPRESS OR IMPLIED: (I) AS TO THE SOFTWARE, THE INFORMATION, CONTENT, MATERIALS ETC. INCLUDED THEREIN; (II) THAT THE SOFTWARE WILL BE FUNCTIONING CONTINUOUSLY, UNINTERRUPTED, SECURELY OR ERROR-FREE; (III) AS TO THE ACCURACY, RELIABILITY, OR CURRENCY OF ANY INFORMATION, CONTENT, PRODUCTS AND SERVICES PROVIDED; OR (IV) THAT THE SOFTWARE, SERVERS, PLATFORMS, OR E-MAILS SENT FROM OR ON BEHALF OF LICENSOR, ARE FREE OF VIRUSES, SCRIPTS, TROJAN HORSES, WORMS OR OTHER HARMFUL COMPONENTS.
+
+12 Indemnification
+
+You agree to defend, indemnify, and hold harmless Licensor, its parents and affiliates, licensors and partners, the platform/service providers and their respective members, employees, contractors, officers, and directors, from and against any actions, claims, demands, liability and expenses, including reasonable attorneys' fees, arising out of Your use or misuse of the Software, including related services by a third party with the use of Your account.
+
+13 Termination
+
+This EULA is effective until amended by Licensor in its sole discretion. Licensor may change, suspend, or discontinue all or any aspect of the Software at any time for any reason without prior notice or liability, including, without limitation, the availability of the Software or any feature. Licensor may cease to provide the Software or any or all of the products and services offered in connection with the Software, terminate this EULA, and cancel all of the rights granted to You under this EULA at any time for any reason without prior notice or liability. Licensor may, but is not obligated to, communicate such termination to You in any of the following manners: (i) in a notice in the Software; (ii) via electronic mail; (iii) in this EULA, or (iv) in another manner that Licensor deems suitable to inform You of the termination. If Licensor terminates the Software, You will not receive a refund of paid fees. In the event of any termination hereunder, sections 1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13 and 14 of this EULA will survive termination.
+
+14 Governing law
+
+14.1 If You are located outside of the United States of America this EULA shall be governed by and construed in accordance with the laws of Sweden, without giving effect to any principles of conflicts of law, and the parties hereby consent to the sole and exclusive jurisdiction of the courts of Sweden, with the district court of Stockholm (“Stockholm Tingsrätt) as first venue, to resolve any disputes arising out of or relating to this EULA.
+
+14.2 If You are located within the United States of America and mandatory laws of Your jurisdiction require that this EULA shall be subject to American law, this EULA shall be governed by and construed in accordance with the laws of the state of New York, without giving effect to any principles of conflicts of law. If applicable laws allow, this EULA shall be governed by and have its venue in the same manner as described in section 14.1 above.
+
+14.3 Notwithstanding anything to the contrary, Licensor may apply to any court of competent jurisdiction for injunctive or other equitable relief.
+
+©Idyllic Pixel AB
+Johanneshov, Sweden
