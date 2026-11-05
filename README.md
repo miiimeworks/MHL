@@ -149,17 +149,6 @@ TargetApp_M/
 * **App 영역** : 원본 앱 바이너리 및 사용자 데이터 초기 상태를 위한 템플릿.
 * **Dat 영역** : 사용자가 수정한 사항이 저장되는 실제 데이터 저장소.
 
-**AppDat Sub-folder Rule / AppDat 하위 폴더 규칙**
-
-- Each folder directly under `Local` / `LocalLow` / `Roaming` is injected and retrieved as a whole. A folder that contains only sub-folders and no files is treated as a path-only folder: the launcher descends into it, and the lowest folders become the targets (a folder with at least one file, or an empty one, is a target).  
-  e.g. `Local\Temp\App` + `Local\Vendor` → `Temp` is left alone; `Temp\App` and `Vendor` are both injected / retrieved.  
-  To make a sub-folder-only folder a target as a whole, put one file in it.  
-  A path-only folder missing on the host is created on injection and removed on exit if empty; existing folders are left alone.
-
-- `Local` / `LocalLow` / `Roaming` 바로 아래 폴더를 통째로 주입 · 회수함. 폴더 안에 하위 폴더만 있고 파일이 하나도 없으면 경로용 폴더로 보고 그 안으로 내려가서 가장 아래 폴더를 대상으로 삼음 (파일이 하나라도 있거나 비어 있는 폴더가 대상).  
-  예) `Local\Temp\App` + `Local\Vendor` → `Temp` 는 건드리지 않고 `Temp\App` 와 `Vendor` 둘 다 주입 · 회수.  
-  하위 폴더만 있는 폴더를 통째로 대상으로 삼으려면 그 안에 파일을 하나 둘 것.  
-  경로용 폴더가 호스트에 없으면 주입 때 만들고 종료 때 비어 있으면 제거. 이미 있던 폴더는 건드리지 않음.
 
 ### 3. Technical Specification (`ini`)
 
@@ -306,18 +295,17 @@ Standalone companion utilities are provided alongside MHL.
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/42ca020bfce3714cf06b023e4257327229256c7a10d8f2b10774d1aff53ba85d?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/dc2cc2a7b9a99b57cd3892aaa9cce415c1c6fbcd3d7f60b28664eb189b734d73?nocache=1)
 
 | Status             | Details                                                                        |
 |:------------------ |:------------------------------------------------------------------------------ |
-| **Major Vendors**  | **Clean** (Passed by AhnLab V3, Kaspersky, Microsoft, Avast, ESET, etc.)       |
-| **Detection Rate** | **3 / 57** (Mostly Heuristic/Generic/Trojan-type flags)                        |
+| **Detection Rate** | **4 / 65** (Mostly Heuristic/Generic/Trojan-type flags)                        |
 | **Integrity**      | Private project; verified via hashes and VT results. 						  |
 
 > This Program was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 프로그램은 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `42ca020bfce3714cf06b023e4257327229256c7a10d8f2b10774d1aff53ba85d`
+**File Checksum (SHA-256) :** `dc2cc2a7b9a99b57cd3892aaa9cce415c1c6fbcd3d7f60b28664eb189b734d73`
 
 ---
 
