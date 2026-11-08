@@ -124,28 +124,8 @@ Not recommended unless you have a thorough understanding of file systems and reg
 			* Usr folder is for ADVANCED USERS ONLY.
 			* Usr 폴더는 고급 사용자 전용.	
 
-   - AppDat Sub-folder Rule / AppDat 하위 폴더 규칙 :
-     Each folder directly under Local / LocalLow / Roaming is injected and retrieved as a whole.
-     A folder that contains only sub-folders and no files is treated as a path-only folder: the launcher descends into it,
-     and the lowest folders become the targets (a folder with at least one file, or an empty one, is a target).
-     e.g. Local\Temp\App + Local\Vendor -> Temp is left alone; Temp\App and Vendor are both injected / retrieved.
-     To make a sub-folder-only folder a target as a whole, put one file in it.
-     A path-only folder missing on the host is created on injection and removed on exit if empty; existing folders are left alone.
-
-     Local / LocalLow / Roaming 바로 아래 폴더를 통째로 주입 · 회수함.
-     폴더 안에 하위 폴더만 있고 파일이 하나도 없으면 경로용 폴더로 보고 그 안으로 내려가서 가장 아래 폴더를 대상으로 삼음 (파일이 하나라도 있거나 비어 있는 폴더가 대상).
-     예) Local\Temp\App + Local\Vendor -> Temp 는 건드리지 않고 Temp\App 와 Vendor 둘 다 주입 · 회수.
-     하위 폴더만 있는 폴더를 통째로 대상으로 삼으려면 그 안에 파일을 하나 둘 것.
-     경로용 폴더가 호스트에 없으면 주입 때 만들고 종료 때 비어 있으면 제거. 이미 있던 폴더는 건드리지 않음.
-
 3. Customization
    - Core configuration via TargetApp_M.ini.
-   - Available sections (INI order / INI 섹션 순서):
-     Launch, Directories, Environment, Options,
-     ProcessWatch, ProcessKill,
-     Registry, RegistryRoot, RegistryShell, RegistryAssoc, ShellExt, RegistryFix,
-     FileWrite, CleanupExclude, CleanupDelete, Assets, UserFile,
-     ShortcutGuard, SharedClean, TraceClean, Resources, Advanced
 
    [사용자 정의]
    - TargetApp_M.ini를 통한 코어 설정.

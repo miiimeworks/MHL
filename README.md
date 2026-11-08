@@ -162,7 +162,10 @@ Key configuration values for the launcher behavior.
 | `RunAsAdmin`             | Launch   | Bool | 1=Force Administrator privileges, 0=User mode                                                                                  |
 | `UseJunction`            | Options  | Bool | **1=Symbolic Link (Recommended)**, 0=Physical Copy mode                                                                        |
 | `FreezeMode`             | Options  | Bool | 1=Non-persistent (Volatile / Read-Only), 0=Persistent. **Requires `UseJunction=0`.** Mutually exclusive with Junction mode.    |
+| `ExitNotice`             | Options  | Bool | 1=Show a completion message (OK button) after exit and cleanup have fully finished, 0=Off (default). Primary shows `Session Terminated. [Primary]`, secondary shows `[Secondary]` |
 | `LogLevel`               | Options  | Int  | 0=Off (default), 1=All including DEBUG, 2=INFO and above, 3=WARN and above, 4=ERROR only. Values outside 0–4 are treated as 0. |
+| `PreLaunchDelay`         | Advanced | Int  | Wait time (ms) after all preparation and right before launching the target (default: `0`, max `60000`). Secondary instances do not wait |
+| `PostLaunchDelay`        | Advanced | Int  | Wait time (ms) after app exit is detected and before cleanup starts, applied before any other wait setting (default: `0`, max `60000`). Secondary instances do not wait |
 | `ProcessCheckInterval`   | Advanced | Int  | Polling interval (ms) for child process monitoring (default: `200`)                                                            |
 | `ExitThreshold`          | Advanced | Int  | Consecutive missed polls before process exit is declared (default: `2`)                                                        |
 | `CrashRecovery`          | Launch   | Bool | 1=Auto-recover orphaned `_bakk` folders on next launch (default), 0=Disabled                                                   |
@@ -295,17 +298,18 @@ Standalone companion utilities are provided alongside MHL.
 
 ## 🛡️ Security & Anti-virus Info
 
-### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/dc2cc2a7b9a99b57cd3892aaa9cce415c1c6fbcd3d7f60b28664eb189b734d73?nocache=1)
+### [✅ VirusTotal Analysis Report](https://www.virustotal.com/gui/file/500b3e7f3b570973d34f499f7e7f8db6fb9adeffdda94acab7adbe25ee2b698d?nocache=1)
 
 | Status             | Details                                                                        |
 |:------------------ |:------------------------------------------------------------------------------ |
-| **Detection Rate** | **4 / 65** (Mostly Heuristic/Generic/Trojan-type flags)                        |
+| **Major Vendors**  | **Clean** (Passed by AhnLab V3, Kaspersky, Microsoft, Avast, ESET, etc.)       |
+| **Detection Rate** | **4 / 71** (Mostly Heuristic/Generic/Trojan-type flags)                        |
 | **Integrity**      | Private project; verified via hashes and VT results. 						  |
 
 > This Program was created with AutoIt. Some antivirus programs may incorrectly detect it as a virus.  
 > 본 프로그램은 AutoIt으로 제작되었습니다. 일부 백신이 바이러스로 오진 할 수 있습니다. 
 
-**File Checksum (SHA-256) :** `dc2cc2a7b9a99b57cd3892aaa9cce415c1c6fbcd3d7f60b28664eb189b734d73`
+**File Checksum (SHA-256) :** `500b3e7f3b570973d34f499f7e7f8db6fb9adeffdda94acab7adbe25ee2b698d`
 
 ---
 
