@@ -27,7 +27,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 * **Core Engine** : AutoIt3, WinAPI (Kernel32, User32, Advapi32), GDI+
 * **Process Management** : WMI (Windows Management Instrumentation) query-based monitoring.
 * **FileSystem** : NTFS Junction Points (Reparse Points) & Physical Fallback.
-* **Registry** : Native Hive Injection/Retrieval via Regedit binaries.
+* **Registry** : Native Hive Injection/Retrieval via Regedit / reg.exe binaries (32-bit and 64-bit registry views).
 
 ---
 
@@ -48,6 +48,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 ### 2. Registry Management
 
 - **Injection** : Seamless integration of HKCU / HKLM keys.
+- **Registry Views** : On 64-bit Windows, keys under HKLM `\SOFTWARE` are split into a 32-bit view and a 64-bit view. With `RegBothViews=1` (default) both views are backed up, injected, exported, deleted and restored. Without it, only the launcher's own bitness view is handled. The `.reg` templates are kept in `Reg_x86` (32-bit view) and `Reg_x64` (64-bit view); other keys (HKCU etc.) use `Reg`.
 - **Integrity** : Hashing (MD5) applied to long key paths during backup.
 - **Cleanup** : Root key pruning and verified retrieval.
 - **Trace** : Optional deletion of execution traces (MUICache, UserAssist) on exit.
@@ -57,6 +58,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 **[레지스트리 관리]**
 
 - **주입** : HKCU / HKLM 키의 무결절 통합.
+- **레지스트리 뷰** : 64비트 Windows 에서 HKLM `\SOFTWARE` 아래 키는 32비트 뷰와 64비트 뷰로 나뉨. `RegBothViews=1` (기본) 이면 두 뷰를 모두 백업 · 주입 · 내보내기 · 삭제 · 복원하고, 0 이면 런처 비트의 뷰만 처리. `.reg` 템플릿은 `Reg_x86` (32비트 뷰) 와 `Reg_x64` (64비트 뷰) 에 따로 보관하며, 그 밖의 키 (HKCU 등) 는 `Reg` 를 사용.
 - **무결성** : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
 - **정리** : 루트 키 가지치기 및 검증된 회수 수행.
 - **흔적** : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제.
@@ -104,11 +106,15 @@ Not recommended unless you have a thorough understanding of file systems and reg
 ### 1. Quick Setup
 
 - **Naming Convention** : The launcher executable and INI file must have the same name (e.g., `TargetApp_M.exe` and `TargetApp_M.ini`). For management and identification, filenames must include the `_M` suffix.
+- **Bitness** : Build the launcher per bitness (x86 portable = x86 launcher, x64 portable = x64 launcher). A launcher handles its own bitness's registry view by default. The target's bitness may differ (set `RegBothViews=1` to handle both views).
+- **INI Lookup** : For `TargetApp_x64_M.exe` / `TargetApp_x86_M.exe`, the first existing INI is used: own bitness -> `TargetApp_M.ini` -> other bitness.
 
 **[빠른 설정]**
 
 - **네이밍 규칙** : 런처 실행 파일과 INI 파일은 같은 이름이어야 함 (예: `TargetApp_M.exe` 및 `TargetApp_M.ini`). 
   관리 및 식별을 위해 파일명에 `_M` 접미사를 반드시 포함해야 함.  
+- **비트** : 런처를 비트별로 따로 빌드 (x86 포터블 = x86 런처, x64 포터블 = x64 런처). 런처는 기본적으로 자기 비트의 레지스트리 뷰를 처리함. 타겟 비트는 달라도 됨 (두 뷰를 모두 처리하려면 `RegBothViews=1`).
+- **INI 탐색** : `TargetApp_x64_M.exe` / `TargetApp_x86_M.exe` 이면 자기 비트 -> `TargetApp_M.ini` -> 다른 비트 순으로 처음 존재하는 INI 사용.
 
 ### 2. Directory Structure
 
@@ -133,7 +139,9 @@ TargetApp_M/
      │       │   ├─ Local/          # %LocalAppData% 대체
      │       │   ├─ LocalLow/       # %LocalLow% 대체
      │       │   └─ Roaming/        # %AppData% 대체
-     │       ├─ Reg/                # Registry Templates / 주입용 .reg 템플릿
+     │       ├─ Reg/                # Registry Templates (HKCU etc.) / 주입용 .reg 템플릿 (HKCU 등)
+     │       ├─ Reg_x86/            # Registry Templates, HKLM\SOFTWARE 32-bit view / 주입용 .reg 템플릿 (HKLM\SOFTWARE 32비트 뷰)
+     │       ├─ Reg_x64/            # Registry Templates, HKLM\SOFTWARE 64-bit view / 주입용 .reg 템플릿 (HKLM\SOFTWARE 64비트 뷰)
      │       ├─ Set/                # Portable Settings / 앱 폴더 병합용 설정 파일 
      │       └─ Usr/                # User File / 사용자 파일 *    
      │
@@ -171,6 +179,7 @@ Key configuration values for the launcher behavior.
 | `CrashRecovery`          | Launch   | Bool | 1=Auto-recover orphaned `_bakk` folders on next launch (default), 0=Disabled                                                   |
 | `AllowMultipleInstances` | Launch   | Bool | 1=Allow multiple concurrent instances (first launcher = primary, later ones = secondary; recovery, injection and cleanup are done once by the primary), 0=Block (default) |
 | `DetectReadOnly`         | Options  | Bool | 1=Check for read-only media and exit with a message if detected (default), 0=Skip the check |
+| `RegBothViews`           | Options  | Bool | 1=Handle keys under HKLM `\SOFTWARE` in both the 32-bit and 64-bit registry views (default, 64-bit Windows only), 0=Launcher's own bitness view only. `.reg` templates: `Reg_x86` / `Reg_x64` |
 | `AddCommand`             | Options  | Str  | Additional command-line arguments appended to the target executable on launch                                                  |
 | `WorkDir`                | Launch   | Str  | Working directory for the target executable (default: same directory as `{Run}`)                                               |
 
@@ -192,8 +201,8 @@ Key configuration values for the launcher behavior.
 
 | Section           | Description                                                                                                                                                                                                                               |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[Registry]`      | Registry keys (HKCU / HKLM `\SOFTWARE`) to back up on launch, inject from `Dat\Reg\<KeyName>.reg` (named after the INI key, e.g. `01=` → `01.reg`), retrieve on exit, and delete from host. If `Dat\Reg\` does not exist, backup and delete only (no injection — clean state mode). Shared areas (`Explorer\FileExts\...`, `OpenWithProgids`, `OpenWithList`) are ignored; use `[SharedClean]`. Supports `SmartSkip` (default: `0`). |
-| `[RegistryRoot]`  | Parent keys to prune if empty after `[Registry]` cleanup. Supports `SmartSkip` (default: `0`).                                                                                                                                            |
+| `[Registry]`      | Registry keys (HKCU / HKLM `\SOFTWARE`) to back up on launch, inject from `.reg` files (named after the INI key, e.g. `01=` → `01.reg`), retrieve on exit, and delete from host. Keys under HKLM `\SOFTWARE` use `Dat\Reg_x86\` (32-bit view) and `Dat\Reg_x64\` (64-bit view); other keys (HKCU etc.) use `Dat\Reg\`. If the matching folder does not exist, backup and delete only (no injection — clean state mode). Shared areas (`Explorer\FileExts\...`, `OpenWithProgids`, `OpenWithList`) are ignored; use `[SharedClean]`. Supports `SmartSkip` (default: `0`). |
+| `[RegistryRoot]`  | Parent keys to prune if empty after `[Registry]` cleanup (both views with `RegBothViews=1`). Supports `SmartSkip` (default: `0`).                                                                                                                                            |
 | `[RegistryShell]` | Shell context menu entries to register on launch and remove on exit. Supports `SmartSkip` (default: `0`).                                                                                                                                 |
 | `[RegistryAssoc]` | File associations (extension → ProgID → open command / icon) registered on launch and removed on exit. HKCU by default, `Scope=HKLM` for HKLM (admin). `HostSkip=1` skips the section when the host already has the same ProgID. Supports `SmartSkip` (default: `0`). |
 | `[ShellExt]`      | COM shell extensions (context menu / drag-and-drop / property sheet handlers; HKLM, admin required). Server DLL via `Dll=`, or per CLSID with the optional 3rd field (`CLSID\|{GUID}\|{Run}\Other.dll`) for multi-DLL apps. `HostSkip=1` protects a host install. Supports `SmartSkip` (default: `0`). |
@@ -328,7 +337,7 @@ This is a **private project**. No technical support is provided.
 **Developer** : MIIIME  
 **Website** : https://www.miiime.com  
 **GitHub** : [@miiimeworks](https://github.com/miiimeworks)  
-**Last Update** : 2026-11-01   
+**Last Update** : 2026-11-19   
 
 <br>
 <img width="64" height="64" alt="002" src="https://github.com/miiimeworks/M4T/blob/main/4bit_Brutal/Logo/Neon/4b_Mium_64_0_G.png?raw=true">  
