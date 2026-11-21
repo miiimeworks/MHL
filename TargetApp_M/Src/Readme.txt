@@ -24,9 +24,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
 2. Registry Management
    - Injection : Seamless integration of HKCU / HKLM keys (HKLM requires administrator rights).
-   - Registry Views : On 64-bit Windows, keys under HKLM\SOFTWARE are split into a 32-bit view and a 64-bit view.
-     With RegBothViews=1 (default) both views are backed up, injected, exported, deleted and restored. Without it, only the launcher's own bitness view is handled.
-     The .reg templates are kept in Reg_x86 (32-bit view) and Reg_x64 (64-bit view); other keys (HKCU etc.) use Reg.
    - Integrity : Hashing (MD5) applied to long key paths during backup.
    - Cleanup : Root key pruning and verified retrieval.
    - Trace : Optional deletion of execution traces (MUICache, UserAssist) on exit (enable with SmartSkip=0 in [TraceClean]; targets: {Exe} / {Launcher}).
@@ -36,9 +33,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
 
    [레지스트리 관리]
    - 주입 : HKCU / HKLM 키의 무결절 통합 (HKLM은 관리자 권한 필요).
-   - 레지스트리 뷰 : 64비트 Windows 에서 HKLM\SOFTWARE 아래 키는 32비트 뷰와 64비트 뷰로 나뉨.
-     RegBothViews=1 (기본) 이면 두 뷰를 모두 백업 · 주입 · 내보내기 · 삭제 · 복원하고, 0 이면 런처 비트의 뷰만 처리.
-     .reg 템플릿은 Reg_x86 (32비트 뷰) 와 Reg_x64 (64비트 뷰) 에 따로 보관하며, 그 밖의 키 (HKCU 등) 는 Reg 를 사용.
    - 무결성 : 백업 시 긴 키 경로에 대한 해싱(MD5) 적용.
    - 정리 : 루트 키 가지치기 및 검증된 회수 수행.
    - 흔적 : 종료 시 실행 흔적(MUICache, UserAssist) 선택적 삭제 ([TraceClean]의 SmartSkip=0 으로 사용, 대상: {Exe} / {Launcher}).
@@ -89,7 +83,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
      The target executable is specified separately by ExeName= in [Launch].
    - Binary Placement : Place the target application folder inside the App/ directory.
    - Bitness : Build the launcher per bitness (x86 portable = x86 launcher, x64 portable = x64 launcher).
-     A launcher handles its own bitness's registry view by default. The target's bitness may differ (set RegBothViews=1 to handle both views).
    - INI Lookup : For TargetApp_x64_M.exe / TargetApp_x86_M.exe, the first existing INI is used: own bitness -> TargetApp_M.ini -> other bitness.
 
    [설치]
@@ -98,7 +91,6 @@ Not recommended unless you have a thorough understanding of file systems and reg
      타겟 실행 파일은 [Launch]의 ExeName=으로 별도 지정.
    - 바이너리 배치 : 타겟 애플리케이션 폴더를 App/ 디렉토리 내부에 배치.
    - 비트 : 런처를 비트별로 따로 빌드 (x86 포터블 = x86 런처, x64 포터블 = x64 런처).
-     런처는 기본적으로 자기 비트의 레지스트리 뷰를 처리함. 타겟 비트는 달라도 됨 (두 뷰를 모두 처리하려면 RegBothViews=1).
    - INI 탐색 : TargetApp_x64_M.exe / TargetApp_x86_M.exe 이면 자기 비트 -> TargetApp_M.ini -> 다른 비트 순으로 처음 존재하는 INI 사용.
 
 2. Directory Structure (상세 폴더 구조) 
@@ -123,9 +115,7 @@ Not recommended unless you have a thorough understanding of file systems and reg
 	│          │	├─ Local/      	# %LocalAppData% 대체
 	│          │	├─ LocalLow/    	# %LocalLow% 대체
 	│          │	└─ Roaming/     	# %AppData% 대체
-	│		├─ Reg/             	# Registry Templates (HKCU etc.) / 주입용 .reg 템플릿 (HKCU 등)	
-	│		├─ Reg_x86/         	# Registry Templates, HKLM\SOFTWARE 32-bit view / 주입용 .reg 템플릿 (HKLM\SOFTWARE 32비트 뷰)	
-	│		├─ Reg_x64/         	# Registry Templates, HKLM\SOFTWARE 64-bit view / 주입용 .reg 템플릿 (HKLM\SOFTWARE 64비트 뷰)	
+	│		├─ Reg/             	# Registry Templates / 주입용 .reg 템플릿	
 	│		├─ Set/      			# Portable Settings / 앱 폴더 병합용 설정 파일     
 	│		└─ Usr/             		# User File / 사용자 파일 *
 	│    	   
@@ -157,4 +147,4 @@ This is a **private project**. No technical support is provided.
 Developer	: MIIIME 
 Website		: https://www.miiime.com 
 GitHub		: @miiimeworks 
-Update		: 2026.11.19
+Update		: 2026.11.01
