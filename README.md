@@ -269,7 +269,7 @@ Standalone companion utilities are provided alongside MHL.
 > ### MIIIME Settings Saver (MSS)
 > 
 > Saves the settings of an installed app into the standard structure of MHL.  
-> 설치된 앱의 설정을 MHL 의 표준 구조로 저장
+> 설치된 앱의 설정을 MHL 의 표준 구조로 저장.
 
 - **Repository** : [MIIIMESettingsSaver](https://github.com/miiimeworks/MSS)
 
