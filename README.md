@@ -266,6 +266,13 @@ Any other argument is passed through to the target application.
 Standalone companion utilities are provided alongside MHL.  
 미메런처의 운영을 보조하는 독립 도구를 제공함.  
 
+> ### MIIIME Settings Saver (MSS)
+> 
+> Saves the settings of an installed app into the standard structure of MHL.  
+> 설치된 앱의 설정을 MHL 의 표준 구조로 저장
+
+- **Repository** : [MIIIMESettingsSaver](https://github.com/miiimeworks/MSS)
+
 > ### MIIIME Icon Changer (MIC)
 > 
 > Change the icon of the launcher executable file after portable wrapping.  
